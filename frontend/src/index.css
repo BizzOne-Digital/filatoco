@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.label-eyebrow {
+  @apply text-xs tracking-[0.2em] uppercase text-terracotta font-semibold;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-sage px-7 py-3 text-sm font-medium text-cream transition-colors duration-300 hover:bg-brown focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 focus:ring-offset-cream;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-brown/30 bg-transparent px-7 py-3 text-sm font-medium text-brown transition-colors duration-300 hover:bg-brown hover:text-cream focus:outline-none focus:ring-2 focus:ring-brown focus:ring-offset-2 focus:ring-offset-cream;
+}
+
+.section-heading {
+  @apply font-serif text-3xl md:text-4xl text-brown;
+}

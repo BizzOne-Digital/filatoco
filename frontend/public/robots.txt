@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /my-account
+Disallow: /checkout
+
+Sitemap: https://filatoco.ca/sitemap.xml
