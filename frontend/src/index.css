@@ -23,7 +23,7 @@ html {
 }
 
 .btn-primary {
-  @apply inline-flex items-center justify-center gap-2 rounded-full bg-sage px-7 py-3 text-sm font-medium text-cream transition-colors duration-300 hover:bg-brown focus:outline-none focus:ring-2 focus:ring-sage focus:ring-offset-2 focus:ring-offset-cream;
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-brown px-7 py-3 text-sm font-medium text-cream transition-colors duration-300 hover:bg-ink focus:outline-none focus:ring-2 focus:ring-brown focus:ring-offset-2 focus:ring-offset-cream;
 }
 
 .btn-secondary {

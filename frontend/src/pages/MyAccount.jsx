@@ -54,7 +54,7 @@ const MyAccount = () => {
         <h1 className="section-heading">My Account</h1>
         <div className="mt-8 flex flex-wrap gap-3">
           {tabs.map((t) => (
-            <button key={t} onClick={() => setTab(t)} className={`rounded-full px-5 py-2 text-sm ${tab === t ? 'bg-sage text-cream' : 'border border-beige text-brown'}`}>{t}</button>
+            <button key={t} onClick={() => setTab(t)} className={`rounded-full px-5 py-2 text-sm ${tab === t ? 'bg-brown text-cream' : 'border border-beige text-brown'}`}>{t}</button>
           ))}
           <button onClick={handleLogout} className="ml-auto rounded-full border border-terracotta px-5 py-2 text-sm text-terracotta">Logout</button>
         </div>

@@ -3,12 +3,13 @@ import toast from 'react-hot-toast';
 import { X } from 'lucide-react';
 import api from '../../services/api';
 
-const productTypes = ['crochet', 'tapestry', 'sewn', 'shoulder-bag', 'tote', 'crossbody', 'top-handle'];
+// Style options within a category (category itself = Crocheted or Tapestry, managed separately).
+const productTypes = ['shoulder-bag', 'handbag', 'crossbody', 'tote', 'clutch'];
 
 const emptyForm = {
   name: '', sku: '', description: '', shortDescription: '', price: '', comparePrice: '',
   category: '', subcategory: '', materials: '', colors: '', dimensions: '', stock: 1,
-  productType: 'crochet', madeType: 'ready-made', isFeatured: false, isNewArrival: false,
+  productType: 'shoulder-bag', madeType: 'ready-made', isFeatured: false, isNewArrival: false,
   status: 'published', seoTitle: '', seoDescription: '',
 };
 

@@ -65,7 +65,7 @@ const Testimonials = () => {
                 <p className="text-sm text-brown/60">{t.review}</p>
               </div>
               <div className="flex items-center gap-3">
-                <button onClick={() => togglePublish(t)} className={`rounded-full px-3 py-1 text-xs ${t.isPublished ? 'bg-sage text-cream' : 'border border-beige text-brown'}`}>
+                <button onClick={() => togglePublish(t)} className={`rounded-full px-3 py-1 text-xs ${t.isPublished ? 'bg-brown text-cream' : 'border border-beige text-brown'}`}>
                   {t.isPublished ? 'Published' : 'Unpublished'}
                 </button>
                 <button onClick={() => handleDelete(t._id)} className="text-brown hover:text-red-600"><Trash2 size={16} /></button>

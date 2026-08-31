@@ -5,14 +5,12 @@ import api from '../services/api';
 import ProductCard from '../components/ProductCard';
 
 const productTypes = [
-  { value: '', label: 'All Types' },
-  { value: 'crochet', label: 'Crochet' },
-  { value: 'tapestry', label: 'Tapestry' },
-  { value: 'sewn', label: 'Sewn' },
+  { value: '', label: 'All Styles' },
   { value: 'shoulder-bag', label: 'Shoulder Bag' },
-  { value: 'tote', label: 'Tote' },
+  { value: 'handbag', label: 'Handbag' },
   { value: 'crossbody', label: 'Crossbody' },
-  { value: 'top-handle', label: 'Top Handle' },
+  { value: 'tote', label: 'Tote' },
+  { value: 'clutch', label: 'Clutch' },
 ];
 
 const Shop = () => {
@@ -106,7 +104,7 @@ const Shop = () => {
               <button
                 key={n}
                 onClick={() => updateParam('page', n)}
-                className={`h-9 w-9 rounded-full text-sm ${page === n ? 'bg-sage text-cream' : 'border border-beige text-brown'}`}
+                className={`h-9 w-9 rounded-full text-sm ${page === n ? 'bg-brown text-cream' : 'border border-beige text-brown'}`}
               >
                 {n}
               </button>

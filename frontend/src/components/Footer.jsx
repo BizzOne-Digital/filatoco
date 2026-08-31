@@ -14,10 +14,11 @@ const Footer = () => (
         <p className="text-xs font-semibold uppercase tracking-wider text-terracotta">Shop</p>
         <ul className="mt-4 space-y-2 text-sm text-brown/70">
           <li><Link to="/shop">All Collections</Link></li>
-          <li><Link to="/shop/tote">Tote Bags</Link></li>
           <li><Link to="/shop/shoulder-bag">Shoulder Bags</Link></li>
-          <li><Link to="/shop/top-handle">Top Handle Bags</Link></li>
-          <li><Link to="/shop/crossbody">Crossbody Bags</Link></li>
+          <li><Link to="/shop/handbag">Handbags</Link></li>
+          <li><Link to="/shop/crossbody">Crossbody</Link></li>
+          <li><Link to="/shop/tote">Tote</Link></li>
+          <li><Link to="/shop/clutch">Clutch</Link></li>
         </ul>
       </div>
       <div>

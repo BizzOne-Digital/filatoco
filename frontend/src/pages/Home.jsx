@@ -125,7 +125,7 @@ const Home = () => {
           <span className="label-eyebrow">Explore</span>
           <h2 className="section-heading mt-2">Shop by Category</h2>
         </Reveal>
-        <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
           {categories.map((c, i) => (
             <Reveal key={c._id} delay={i * 0.06}>
               <Link to={`/shop?category=${c._id}`} className="group relative block overflow-hidden rounded-xl2 bg-beige">
@@ -136,9 +136,10 @@ const Home = () => {
                     <div className="flex h-full items-center justify-center bg-taupe/30 text-brown/50">{c.name}</div>
                   )}
                 </div>
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brown/80 to-transparent p-4">
-                  <p className="font-serif text-lg text-cream">{c.name}</p>
-                  <span className="text-xs text-cream/80 opacity-0 transition-opacity group-hover:opacity-100">Explore Collection →</span>
+                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-4">
+                  <p className="font-serif text-lg text-white [text-shadow:0_1px_4px_rgba(0,0,0,0.7)]">{c.name}</p>
+                  <span className="text-xs text-white/90 opacity-0 transition-opacity [text-shadow:0_1px_4px_rgba(0,0,0,0.7)] group-hover:opacity-100">Explore Collection →</span>
                 </div>
               </Link>
             </Reveal>
@@ -149,7 +150,7 @@ const Home = () => {
       {/* HANDMADE PROCESS */}
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
         <div className="grid overflow-hidden rounded-xl2 shadow-soft md:grid-cols-2">
-          <Reveal className="flex flex-col justify-center bg-sage p-10 text-cream">
+          <Reveal className="flex flex-col justify-center bg-brown p-10 text-cream">
             <h2 className="font-serif text-3xl md:text-4xl">Crafted by Hand. Made with Care.</h2>
             <p className="mt-4 text-cream/85">
               From the first stitch to the final detail, every FilatoCo purse is handmade with attention to quality,
@@ -171,15 +172,15 @@ const Home = () => {
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
         <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
           {[
-            { icon: Heart, title: 'Handmade', text: 'Each piece is personally crafted.' },
-            { icon: Sparkles, title: 'Unique Designs', text: 'No mass-produced fashion.' },
-            { icon: Gem, title: 'Thoughtful Materials', text: 'Carefully selected yarns, fabrics and accessories.' },
-            { icon: PenTool, title: 'Personal Expression', text: 'Designed for women who want something different.' },
+            { icon: Heart, title: 'Handmade', text: 'Each piece is personally crafted.', bg: 'bg-blush/50' },
+            { icon: Sparkles, title: 'Unique Designs', text: 'No mass-produced fashion.', bg: 'bg-sage/35' },
+            { icon: Gem, title: 'Thoughtful Materials', text: 'Carefully selected yarns, fabrics and accessories.', bg: 'bg-taupe/40' },
+            { icon: PenTool, title: 'Personal Expression', text: 'Designed for women who want something different.', bg: 'bg-terracotta/20' },
           ].map((f, i) => (
-            <Reveal key={f.title} delay={i * 0.08} className="rounded-xl2 bg-offwhite p-6 text-center shadow-soft">
+            <Reveal key={f.title} delay={i * 0.08} className={`rounded-xl2 ${f.bg} p-6 text-center shadow-soft`}>
               <f.icon className="mx-auto mb-3 text-terracotta" size={26} />
               <p className="font-serif text-lg text-brown">{f.title}</p>
-              <p className="mt-1 text-sm text-brown/60">{f.text}</p>
+              <p className="mt-1 text-sm text-brown/70">{f.text}</p>
             </Reveal>
           ))}
         </div>
@@ -224,8 +225,8 @@ const Home = () => {
             <h2 className="section-heading mt-2">What They're Saying</h2>
           </Reveal>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {testimonials.slice(0, 3).map((t) => (
-              <Reveal key={t._id} className="rounded-xl2 bg-offwhite p-6 shadow-soft">
+            {testimonials.slice(0, 3).map((t, i) => (
+              <Reveal key={t._id} className={`rounded-xl2 p-6 shadow-soft ${['bg-blush/40', 'bg-taupe/35', 'bg-sage/30'][i % 3]}`}>
                 <div className="mb-2 text-terracotta">{'★'.repeat(t.rating)}</div>
                 <p className="text-sm text-brown/70">"{t.review}"</p>
                 <p className="mt-4 text-sm font-medium text-brown">— {t.customerName}</p>
@@ -268,22 +269,24 @@ const Home = () => {
       </section>
 
       {/* NEWSLETTER */}
-      <section className="mx-auto max-w-3xl px-5 pb-20 text-center md:px-8">
-        <h2 className="section-heading">A Little Handmade Inspiration</h2>
-        <p className="mt-2 text-brown/60">Join the FilatoCo community for new designs, collections and stories from the studio.</p>
-        <form onSubmit={handleSubscribe} className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Your email address"
-            className="w-full rounded-full border border-beige bg-offwhite px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sage sm:w-72"
-          />
-          <button type="submit" disabled={subscribing} className="btn-primary">
-            {subscribing ? 'Subscribing...' : 'Subscribe'}
-          </button>
-        </form>
+      <section className="mx-auto max-w-7xl px-5 pb-20 md:px-8">
+        <div className="mx-auto max-w-3xl rounded-xl2 bg-gradient-to-br from-blush/60 via-taupe/30 to-sage/25 px-6 py-12 text-center shadow-soft">
+          <h2 className="section-heading">A Little Handmade Inspiration</h2>
+          <p className="mt-2 text-brown/70">Join the FilatoCo community for new designs, collections and stories from the studio.</p>
+          <form onSubmit={handleSubscribe} className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Your email address"
+              className="w-full rounded-full border border-beige bg-offwhite px-5 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brown sm:w-72"
+            />
+            <button type="submit" disabled={subscribing} className="btn-primary">
+              {subscribing ? 'Subscribing...' : 'Subscribe'}
+            </button>
+          </form>
+        </div>
       </section>
     </>
   );

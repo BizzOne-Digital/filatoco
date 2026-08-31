@@ -21,7 +21,8 @@ const productSchema = new mongoose.Schema(
     colors: [String],
     dimensions: String,
     stock: { type: Number, default: 1, min: 0 },
-    productType: { type: String, enum: ['crochet', 'tapestry', 'sewn', 'shoulder-bag', 'tote', 'crossbody', 'top-handle'], required: true },
+    // Style, within the category's craft type (category = Crocheted or Tapestry).
+    productType: { type: String, enum: ['shoulder-bag', 'handbag', 'crossbody', 'tote', 'clutch'], required: true },
     madeType: { type: String, enum: ['ready-made', 'custom-made'], default: 'ready-made' },
     images: [imageSchema],
     isFeatured: { type: Boolean, default: false },
