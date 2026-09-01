@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { X } from 'lucide-react';
 import api from '../../services/api';
+import { filterOversizedFiles, MAX_IMAGE_MB } from '../../utils/validateImage';
 
 // Style options within a category (category itself = Crocheted or Tapestry, managed separately).
 const productTypes = ['shoulder-bag', 'handbag', 'crossbody', 'tote', 'clutch'];
@@ -121,8 +122,14 @@ const ProductForm = ({ product, onClose, onSaved }) => {
           <input placeholder="SEO Description" value={form.seoDescription} onChange={set('seoDescription')} className="w-full rounded-lg border border-beige px-4 py-2 text-sm" />
 
           <div>
-            <label className="mb-1 block text-sm text-brown/70">Product Images</label>
-            <input type="file" multiple accept="image/*" onChange={(e) => setFiles(Array.from(e.target.files))} className="w-full text-sm" />
+            <label className="mb-1 block text-sm text-brown/70">Product Images — max {MAX_IMAGE_MB}MB each</label>
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={(e) => setFiles(filterOversizedFiles(Array.from(e.target.files), toast))}
+              className="w-full text-sm"
+            />
             {product?.images?.length > 0 && (
               <div className="mt-2 flex gap-2">
                 {product.images.map((img) => <img key={img.publicId} src={img.url} alt="" className="h-12 w-12 rounded object-cover" />)}

@@ -93,6 +93,12 @@ const pickAllowedFields = (body) => {
   for (const key of ALLOWED_PRODUCT_FIELDS) {
     if (body[key] !== undefined) picked[key] = body[key];
   }
+  // An empty SKU must stay unset (not ""), otherwise every product with a
+  // blank SKU collides on the unique index — "" is a real indexed value,
+  // sparse only skips fields that are entirely absent.
+  if (typeof picked.sku === 'string' && picked.sku.trim() === '') {
+    delete picked.sku;
+  }
   return picked;
 };
 

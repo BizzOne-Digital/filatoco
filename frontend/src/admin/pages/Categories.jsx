@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Trash2, Plus, Edit2, X } from 'lucide-react';
 import api from '../../services/api';
+import { filterOversizedFiles, MAX_IMAGE_MB } from '../../utils/validateImage';
 
 const emptyForm = { name: '', description: '' };
 
@@ -79,8 +80,13 @@ const Categories = () => {
             <img src={categories.find((c) => c._id === editingId).image.url} alt="" className="h-16 w-16 rounded-lg object-cover" />
           )}
           <div>
-            <label className="mb-1 block text-xs text-brown/60">{editingId ? 'Replace image (optional)' : 'Image'}</label>
-            <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} className="w-full text-sm" />
+            <label className="mb-1 block text-xs text-brown/60">{editingId ? 'Replace image (optional)' : 'Image'} — max {MAX_IMAGE_MB}MB</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFile(filterOversizedFiles(Array.from(e.target.files), toast)[0])}
+              className="w-full text-sm"
+            />
           </div>
           <button type="submit" disabled={saving} className="btn-primary w-full">
             {editingId ? <Edit2 size={16} /> : <Plus size={16} />} {saving ? 'Saving...' : editingId ? 'Update' : 'Add'}

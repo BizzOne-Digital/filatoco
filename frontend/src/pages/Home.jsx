@@ -58,7 +58,7 @@ const Home = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
-            className="max-w-xl rounded-xl2 bg-cream/95 p-6 shadow-soft backdrop-blur-sm md:p-8"
+            className="max-w-xl rounded-xl2 bg-cream p-6 shadow-soft md:p-8"
           >
             <span className="label-eyebrow">Handmade With Heart</span>
             <h1 className="mt-4 font-serif text-4xl leading-tight text-brown md:text-6xl">

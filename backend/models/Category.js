@@ -17,7 +17,9 @@ const categorySchema = new mongoose.Schema(
 );
 
 categorySchema.pre('validate', function (next) {
-  if (this.name) this.slug = slugify(this.name, { lower: true, strict: true });
+  if (this.name && (this.isNew || this.isModified('name'))) {
+    this.slug = slugify(this.name, { lower: true, strict: true });
+  }
   next();
 });
 
