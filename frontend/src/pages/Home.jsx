@@ -72,7 +72,7 @@ const Home = () => {
               <Link to="/shop" className="btn-primary">Shop Collection</Link>
               <Link to="/about" className="btn-secondary">Our Story</Link>
             </div>
-            <p className="mt-6 text-xs uppercase tracking-widest text-brown/50">Handmade &bull; One-of-a-Kind &bull; Crafted with Care</p>
+            <p className="mt-6 text-xs font-semibold uppercase tracking-widest text-brown">Handmade &bull; One-of-a-Kind &bull; Crafted with Care</p>
           </motion.div>
         </div>
       </section>
