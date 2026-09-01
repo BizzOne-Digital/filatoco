@@ -53,13 +53,12 @@ const Home = () => {
         className="relative overflow-hidden bg-cover bg-center px-5 py-24 md:px-8 md:py-36"
         style={{ backgroundImage: "url('/hero.png')" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-cream via-cream/70 to-cream/10" />
         <div className="relative mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
-            className="max-w-xl"
+            className="max-w-xl rounded-xl2 bg-cream/95 p-6 shadow-soft backdrop-blur-sm md:p-8"
           >
             <span className="label-eyebrow">Handmade With Heart</span>
             <h1 className="mt-4 font-serif text-4xl leading-tight text-brown md:text-6xl">
