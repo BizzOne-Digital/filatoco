@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { X } from 'lucide-react';
+import { X, Trash2 } from 'lucide-react';
 import api from '../../services/api';
 import { filterOversizedFiles, MAX_IMAGE_MB } from '../../utils/validateImage';
 
@@ -19,6 +19,8 @@ const ProductForm = ({ product, onClose, onSaved }) => {
   const [form, setForm] = useState(emptyForm);
   const [files, setFiles] = useState([]);
   const [saving, setSaving] = useState(false);
+  const [existingImages, setExistingImages] = useState(product?.images || []);
+  const [deletingImage, setDeletingImage] = useState(null);
 
   useEffect(() => {
     api.get('/categories').then(({ data }) => setCategories(data.categories));
@@ -36,7 +38,23 @@ const ProductForm = ({ product, onClose, onSaved }) => {
     } else {
       setForm(emptyForm);
     }
+    setExistingImages(product?.images || []);
   }, [product]);
+
+  const handleDeleteImage = async (publicId) => {
+    if (!product) return;
+    if (!confirm('Delete this image?')) return;
+    setDeletingImage(publicId);
+    try {
+      await api.delete(`/products/${product._id}/images/${encodeURIComponent(publicId)}`);
+      setExistingImages((prev) => prev.filter((img) => img.publicId !== publicId));
+      toast.success('Image deleted');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Could not delete image');
+    } finally {
+      setDeletingImage(null);
+    }
+  };
 
   const set = (key) => (e) => setForm({ ...form, [key]: e.target.type === 'checkbox' ? e.target.checked : e.target.value });
 
@@ -130,9 +148,22 @@ const ProductForm = ({ product, onClose, onSaved }) => {
               onChange={(e) => setFiles(filterOversizedFiles(Array.from(e.target.files), toast))}
               className="w-full text-sm"
             />
-            {product?.images?.length > 0 && (
-              <div className="mt-2 flex gap-2">
-                {product.images.map((img) => <img key={img.publicId} src={img.url} alt="" className="h-12 w-12 rounded object-cover" />)}
+            {existingImages.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-2">
+                {existingImages.map((img) => (
+                  <div key={img.publicId} className="group relative">
+                    <img src={img.url} alt="" className="h-16 w-16 rounded object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteImage(img.publicId)}
+                      disabled={deletingImage === img.publicId}
+                      aria-label="Delete image"
+                      className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-terracotta text-white opacity-0 shadow-sm transition-opacity group-hover:opacity-100 disabled:opacity-100"
+                    >
+                      {deletingImage === img.publicId ? '…' : <Trash2 size={11} />}
+                    </button>
+                  </div>
+                ))}
               </div>
             )}
           </div>

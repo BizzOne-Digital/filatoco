@@ -45,6 +45,8 @@ const Shop = () => {
       .finally(() => setLoading(false));
   }, [productType, category, madeType, sort, search, minPrice, maxPrice, page]);
 
+  const activeCategory = category ? categories.find((c) => c._id === category) : null;
+
   const updateParam = (key, value) => {
     const next = new URLSearchParams(searchParams);
     if (value) next.set(key, value);
@@ -87,6 +89,18 @@ const Shop = () => {
           <input type="number" placeholder="Min $" defaultValue={minPrice} onBlur={(e) => updateParam('minPrice', e.target.value)} className="w-20 rounded-full border border-beige bg-offwhite px-3 py-2 text-sm" />
           <input type="number" placeholder="Max $" defaultValue={maxPrice} onBlur={(e) => updateParam('maxPrice', e.target.value)} className="w-20 rounded-full border border-beige bg-offwhite px-3 py-2 text-sm" />
         </div>
+
+        {activeCategory && (
+          <div className="mt-8 flex flex-col items-center gap-5 overflow-hidden rounded-xl2 bg-offwhite shadow-soft sm:flex-row">
+            {activeCategory.image?.url && (
+              <img src={activeCategory.image.url} alt={activeCategory.name} className="h-40 w-full object-cover sm:h-36 sm:w-56" />
+            )}
+            <div className="px-5 py-4 sm:py-0">
+              <h2 className="font-serif text-xl text-brown">{activeCategory.name}</h2>
+              {activeCategory.description && <p className="mt-1 text-sm text-brown/70">{activeCategory.description}</p>}
+            </div>
+          </div>
+        )}
 
         {loading ? (
           <p className="mt-16 text-center text-brown/50">Loading products...</p>
