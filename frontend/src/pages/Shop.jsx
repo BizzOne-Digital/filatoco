@@ -91,14 +91,23 @@ const Shop = () => {
         </div>
 
         {activeCategory && (
-          <div className="mt-8 flex flex-col items-center gap-5 overflow-hidden rounded-xl2 bg-offwhite shadow-soft sm:flex-row">
-            {activeCategory.image?.url && (
-              <img src={activeCategory.image.url} alt={activeCategory.name} className="h-40 w-full object-cover sm:h-36 sm:w-56" />
-            )}
-            <div className="px-5 py-4 sm:py-0">
-              <h2 className="font-serif text-xl text-brown">{activeCategory.name}</h2>
-              {activeCategory.description && <p className="mt-1 text-sm text-brown/70">{activeCategory.description}</p>}
+          <div className="mt-8 overflow-hidden rounded-xl2 bg-offwhite shadow-soft">
+            <div className="flex flex-col items-center gap-5 sm:flex-row">
+              {activeCategory.image?.url && (
+                <img src={activeCategory.image.url} alt={activeCategory.name} className="h-40 w-full object-cover sm:h-36 sm:w-56" />
+              )}
+              <div className="px-5 py-4 sm:py-0">
+                <h2 className="font-serif text-xl text-brown">{activeCategory.name}</h2>
+                {activeCategory.description && <p className="mt-1 text-sm text-brown/70">{activeCategory.description}</p>}
+              </div>
             </div>
+            {activeCategory.name === 'Tapestry' && (
+              <div className="grid grid-cols-2 gap-1 border-t border-beige p-1 sm:grid-cols-4">
+                {['/material-fabric-1.jpg', '/material-fabric-2.jpg', '/material-spools-1.jpg', '/material-spools-2.jpg'].map((src) => (
+                  <img key={src} src={src} alt="Tapestry materials" className="aspect-square w-full rounded-lg object-cover" />
+                ))}
+              </div>
+            )}
           </div>
         )}
 
