@@ -102,9 +102,17 @@ const Shop = () => {
               </div>
             </div>
             {activeCategory.name === 'Tapestry' && (
-              <div className="grid grid-cols-2 gap-1 border-t border-beige p-1 sm:grid-cols-4">
-                {['/material-fabric-1.jpg', '/material-fabric-2.jpg', '/material-spools-1.jpg', '/material-spools-2.jpg'].map((src) => (
-                  <img key={src} src={src} alt="Tapestry materials" className="aspect-square w-full rounded-lg object-cover" />
+              <div className="grid grid-cols-2 gap-3 border-t border-beige p-3 sm:grid-cols-4">
+                {[
+                  { src: '/material-fabric-1.jpg', label: 'Woven Tapestry Fabric' },
+                  { src: '/material-fabric-2.jpg', label: 'Folded Fabric Detail' },
+                  { src: '/material-spools-1.jpg', label: 'Ribbon & Twine' },
+                  { src: '/material-spools-2.jpg', label: 'Thread Colors' },
+                ].map((item) => (
+                  <div key={item.src}>
+                    <img src={item.src} alt={item.label} className="aspect-square w-full rounded-lg object-cover" />
+                    <p className="mt-1.5 text-center text-xs text-brown/60">{item.label}</p>
+                  </div>
                 ))}
               </div>
             )}
