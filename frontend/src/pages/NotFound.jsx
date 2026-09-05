@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 
 const NotFound = () => (
   <>
-    <Helmet><title>Page Not Found | FilatoCo</title></Helmet>
+    <Seo title="Page Not Found | FilatoCo" path="/404" noindex />
     <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center px-5 text-center">
       <p className="font-serif text-6xl text-terracotta">404</p>
       <h1 className="mt-4 font-heading text-3xl text-brown">This page seems to have unraveled.</h1>

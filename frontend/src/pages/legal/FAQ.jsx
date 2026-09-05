@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { ChevronDown } from 'lucide-react';
+import Seo from '../../components/Seo';
+import { breadcrumbSchema } from '../../utils/structuredData';
 
 const faqs = [
   { q: 'Are all bags handmade?', a: 'Yes — every FilatoCo bag is handcrafted by Mirella using crochet, tapestry or sewing techniques.' },
@@ -15,7 +16,23 @@ const FAQ = () => {
 
   return (
     <>
-      <Helmet><title>FAQ | FilatoCo</title></Helmet>
+      <Seo
+        title="FAQ | Shipping, Returns &amp; Custom Orders | FilatoCo"
+        description="Answers to common questions about FilatoCo handmade bags — shipping times, returns, custom orders, and booking a personal appointment."
+        path="/faq"
+        jsonLd={[
+          breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'FAQ', path: '/faq' }]),
+          {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faqs.map((f) => ({
+              '@type': 'Question',
+              name: f.q,
+              acceptedAnswer: { '@type': 'Answer', text: f.a },
+            })),
+          },
+        ]}
+      />
       <div className="mx-auto max-w-2xl px-5 py-16 md:px-8">
         <h1 className="section-heading text-center">Frequently Asked Questions</h1>
         <div className="mt-10 space-y-3">

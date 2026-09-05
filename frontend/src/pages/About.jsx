@@ -1,7 +1,8 @@
-import { Helmet } from 'react-helmet-async';
 import { useEffect, useState } from 'react';
 import api from '../services/api';
 import Reveal from '../components/Reveal';
+import Seo from '../components/Seo';
+import { breadcrumbSchema } from '../utils/structuredData';
 
 const About = () => {
   const [content, setContent] = useState(null);
@@ -12,7 +13,12 @@ const About = () => {
 
   return (
     <>
-      <Helmet><title>About Us | FilatoCo</title></Helmet>
+      <Seo
+        title="About FilatoCo | Meet Mirella, Our Founder"
+        description="Meet Mirella, the founder of FilatoCo — from a family of tailors to handmade crochet and tapestry purses, discover the story behind every one-of-a-kind bag."
+        path="/about"
+        jsonLd={breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }])}
+      />
       <div className="mx-auto max-w-5xl px-5 py-16 md:px-8">
         <Reveal className="text-center">
           <span className="label-eyebrow">About FilatoCo</span>

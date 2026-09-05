@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
 import { Heart, Minus, Plus } from 'lucide-react';
 import api from '../services/api';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import ProductCard from '../components/ProductCard';
+import Seo from '../components/Seo';
+import { productSchema, breadcrumbSchema } from '../utils/structuredData';
+
+const STYLE_LABELS = { 'shoulder-bag': 'Shoulder Bag', handbag: 'Handbag', crossbody: 'Crossbody Bag', tote: 'Tote', clutch: 'Clutch' };
 
 const ProductDetail = () => {
   const { slug } = useParams();
@@ -33,24 +36,39 @@ const ProductDetail = () => {
   if (!product) return <div className="flex min-h-[50vh] items-center justify-center text-brown/50">Loading...</div>;
 
   const images = product.images?.length ? product.images : [{ url: '/placeholder-bag.svg' }];
+  const styleLabel = STYLE_LABELS[product.productType] || 'Bag';
+  const fallbackTitle = `${product.name} — Handmade ${product.category?.name || ''} ${styleLabel} | FilatoCo`.replace(/\s+/g, ' ');
+  const fallbackDescription = `${product.name}: a handmade ${styleLabel.toLowerCase()} from FilatoCo's ${product.category?.name || 'handmade'} collection. ${product.shortDescription || ''}`.trim();
 
   return (
     <>
-      <Helmet>
-        <title>{product.seoTitle || product.name} | FilatoCo</title>
-        <meta name="description" content={product.seoDescription || product.shortDescription || product.description} />
-      </Helmet>
+      <Seo
+        title={product.seoTitle || fallbackTitle}
+        description={product.seoDescription || product.shortDescription || fallbackDescription}
+        path={`/product/${product.slug}`}
+        image={images[0]?.url}
+        type="product"
+        jsonLd={[
+          productSchema(product),
+          breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Shop', path: '/shop' },
+            ...(product.category ? [{ name: product.category.name, path: `/shop?category=${product.category._id}` }] : []),
+            { name: product.name, path: `/product/${product.slug}` },
+          ]),
+        ]}
+      />
       <div className="mx-auto max-w-7xl px-5 py-12 md:px-8">
         <div className="grid gap-10 md:grid-cols-2">
           <div>
             <div className="aspect-square overflow-hidden rounded-xl2 bg-beige">
-              <img src={images[activeImage]?.url} alt={product.name} className="h-full w-full object-cover" />
+              <img src={images[activeImage]?.url} alt={`${product.name} — handmade ${styleLabel.toLowerCase()} by FilatoCo`} className="h-full w-full object-cover" />
             </div>
             {images.length > 1 && (
               <div className="mt-3 flex gap-3">
                 {images.map((img, i) => (
                   <button key={i} onClick={() => setActiveImage(i)} className={`h-16 w-16 overflow-hidden rounded-lg border-2 ${activeImage === i ? 'border-terracotta' : 'border-transparent'}`}>
-                    <img src={img.url} alt="" className="h-full w-full object-cover" />
+                    <img src={img.url} alt={`${product.name} view ${i + 1}`} className="h-full w-full object-cover" />
                   </button>
                 ))}
               </div>

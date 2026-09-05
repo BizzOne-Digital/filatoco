@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { Heart, Sparkles, Gem, PenTool, Phone, Mail } from 'lucide-react';
 import api from '../services/api';
 import Reveal from '../components/Reveal';
 import ProductCard from '../components/ProductCard';
+import Seo from '../components/Seo';
 
 const Home = () => {
   const [featured, setFeatured] = useState([]);
@@ -43,10 +43,11 @@ const Home = () => {
 
   return (
     <>
-      <Helmet>
-        <title>FilatoCo | Handmade Purses That Tell a Story</title>
-        <meta name="description" content="Thoughtfully handcrafted crochet, tapestry and sewn bags made with passion, individuality and true craftsmanship." />
-      </Helmet>
+      <Seo
+        title="FilatoCo | Handmade Crochet &amp; Tapestry Purses, Made with Heart"
+        description="Shop handmade crochet and tapestry purses from FilatoCo — thoughtfully crafted shoulder bags, totes, crossbody bags and clutches, each one-of-a-kind and made with passion in Canada."
+        path="/"
+      />
 
       {/* HERO */}
       <section
@@ -245,7 +246,7 @@ const Home = () => {
           <div className="mt-10 grid grid-cols-3 gap-3 md:grid-cols-6">
             {gallery.map((g) => (
               <a key={g._id} href={g.link || '#'} target="_blank" rel="noreferrer" className="aspect-square overflow-hidden rounded-lg">
-                <img src={g.image?.url} alt={g.caption || 'FilatoCo'} className="h-full w-full object-cover transition-transform hover:scale-105" />
+                <img src={g.image?.url} alt={g.caption || 'FilatoCo handmade bag photo'} className="h-full w-full object-cover transition-transform hover:scale-105" />
               </a>
             ))}
           </div>

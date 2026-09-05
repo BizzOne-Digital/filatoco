@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
@@ -49,7 +49,7 @@ const MyAccount = () => {
 
   return (
     <>
-      <Helmet><title>My Account | FilatoCo</title></Helmet>
+      <Seo title="My Account | FilatoCo" path="/my-account" noindex />
       <div className="mx-auto max-w-5xl px-5 py-12 md:px-8">
         <h1 className="section-heading">My Account</h1>
         <div className="mt-8 flex flex-wrap gap-3">

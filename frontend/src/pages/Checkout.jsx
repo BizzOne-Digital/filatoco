@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
 import api from '../services/api';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import Seo from '../components/Seo';
 
 const initial = {
   firstName: '', lastName: '', email: '', phone: '',
@@ -45,7 +45,7 @@ const Checkout = () => {
 
   return (
     <>
-      <Helmet><title>Checkout | FilatoCo</title></Helmet>
+      <Seo title="Checkout | FilatoCo" path="/checkout" noindex />
       <div className="mx-auto max-w-5xl px-5 py-12 md:px-8">
         <h1 className="section-heading">Checkout</h1>
         <div className="mt-8 grid gap-10 md:grid-cols-3">

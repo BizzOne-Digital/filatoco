@@ -1,5 +1,5 @@
 import { useLocation, Link, Navigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { CheckCircle } from 'lucide-react';
 
 const OrderSuccess = () => {
@@ -10,7 +10,7 @@ const OrderSuccess = () => {
 
   return (
     <>
-      <Helmet><title>Order Confirmed | FilatoCo</title></Helmet>
+      <Seo title="Order Confirmed | FilatoCo" path="/order-success" noindex />
       <div className="mx-auto max-w-xl px-5 py-20 text-center md:px-8">
         <CheckCircle className="mx-auto text-sage" size={56} />
         <h1 className="section-heading mt-6">Thank You, {order.customer.firstName}!</h1>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 import ProductCard from '../components/ProductCard';
+import Seo from '../components/Seo';
+import { breadcrumbSchema } from '../utils/structuredData';
 
 const Pricing = () => {
   const [products, setProducts] = useState([]);
@@ -15,7 +16,12 @@ const Pricing = () => {
 
   return (
     <>
-      <Helmet><title>Pricing | FilatoCo</title></Helmet>
+      <Seo
+        title="Pricing | Handmade FilatoCo Purses from $40–$120"
+        description="FilatoCo handmade crochet and tapestry purses typically range from $40 to $120, depending on design, materials, size and customization. Explore the collection or request a custom bag."
+        path="/pricing"
+        jsonLd={breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Pricing', path: '/pricing' }])}
+      />
       <div className="mx-auto max-w-5xl px-5 py-16 text-center md:px-8">
         <h1 className="section-heading">Pricing</h1>
         <p className="mx-auto mt-4 max-w-xl text-brown/70">

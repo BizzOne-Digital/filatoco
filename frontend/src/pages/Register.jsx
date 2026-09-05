@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 
@@ -27,7 +27,7 @@ const Register = () => {
 
   return (
     <>
-      <Helmet><title>Create Account | FilatoCo</title></Helmet>
+      <Seo title="Create Account | FilatoCo" path="/register" noindex />
       <div className="mx-auto max-w-md px-5 py-16 md:px-8">
         <h1 className="section-heading text-center">Create Your Account</h1>
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">

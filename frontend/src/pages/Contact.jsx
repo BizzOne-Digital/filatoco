@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useSearchParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Phone, Mail, Instagram, Facebook } from 'lucide-react';
 import api from '../services/api';
+import Seo from '../components/Seo';
+import { breadcrumbSchema } from '../utils/structuredData';
 
 const Contact = () => {
   const [searchParams] = useSearchParams();
@@ -33,7 +34,12 @@ const Contact = () => {
 
   return (
     <>
-      <Helmet><title>Contact Us | FilatoCo</title></Helmet>
+      <Seo
+        title="Contact FilatoCo | Handmade Bag Inquiries &amp; Appointments"
+        description="Get in touch with FilatoCo for questions, custom bag requests, or to book a personal appointment. Call 905 5165462 or email mirellascarcelli@gmail.com."
+        path="/contact"
+        jsonLd={breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact' }])}
+      />
       <div className="mx-auto max-w-5xl px-5 py-16 md:px-8">
         <h1 className="section-heading text-center">Let's Connect</h1>
         <p className="mx-auto mt-3 max-w-lg text-center text-brown/60">Personal appointments available — let's create something beautiful together.</p>

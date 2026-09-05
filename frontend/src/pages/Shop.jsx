@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import api from '../services/api';
 import ProductCard from '../components/ProductCard';
+import Seo from '../components/Seo';
+import { breadcrumbSchema } from '../utils/structuredData';
 
 const productTypes = [
   { value: '', label: 'All Styles' },
@@ -46,6 +47,7 @@ const Shop = () => {
   }, [productType, category, madeType, sort, search, minPrice, maxPrice, page]);
 
   const activeCategory = category ? categories.find((c) => c._id === category) : null;
+  const hasFilters = Boolean(productType || category || madeType || search || minPrice || maxPrice || page > 1);
 
   const updateParam = (key, value) => {
     const next = new URLSearchParams(searchParams);
@@ -57,7 +59,16 @@ const Shop = () => {
 
   return (
     <>
-      <Helmet><title>Shop | FilatoCo</title></Helmet>
+      <Seo
+        title={activeCategory ? `${activeCategory.name} Bags | Shop FilatoCo` : 'Shop Handmade Crochet &amp; Tapestry Purses | FilatoCo'}
+        description={
+          activeCategory?.description ||
+          'Browse the full FilatoCo collection of handmade crochet and tapestry purses — shoulder bags, handbags, crossbody bags, totes and clutches, filterable by style and price.'
+        }
+        path="/shop"
+        noindex={hasFilters}
+        jsonLd={breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Shop', path: '/shop' }])}
+      />
       <div className="mx-auto max-w-7xl px-5 py-12 md:px-8">
         <h1 className="section-heading text-center">Shop the Collection</h1>
 

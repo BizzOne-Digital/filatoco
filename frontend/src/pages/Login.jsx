@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 
@@ -26,7 +26,7 @@ const Login = () => {
 
   return (
     <>
-      <Helmet><title>Login | FilatoCo</title></Helmet>
+      <Seo title="Login | FilatoCo" path="/login" noindex />
       <div className="mx-auto max-w-md px-5 py-16 md:px-8">
         <h1 className="section-heading text-center">Welcome Back</h1>
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">

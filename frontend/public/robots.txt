@@ -3,5 +3,13 @@ Allow: /
 Disallow: /admin
 Disallow: /my-account
 Disallow: /checkout
+Disallow: /cart
+Disallow: /wishlist
+Disallow: /search
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /order-success
 
 Sitemap: https://filatoco.ca/sitemap.xml

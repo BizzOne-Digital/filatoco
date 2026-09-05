@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import Seo from '../components/Seo';
 
 const Cart = () => {
   const { items, removeItem, updateQuantity, subtotal } = useCart();
 
   return (
     <>
-      <Helmet><title>Your Bag | FilatoCo</title></Helmet>
+      <Seo title="Your Bag | FilatoCo" path="/cart" noindex />
       <div className="mx-auto max-w-5xl px-5 py-12 md:px-8">
         <h1 className="section-heading">Your Bag</h1>
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { useWishlist } from '../context/WishlistContext';
@@ -21,7 +21,7 @@ const Wishlist = () => {
 
   return (
     <>
-      <Helmet><title>Wishlist | FilatoCo</title></Helmet>
+      <Seo title="Your Wishlist | FilatoCo" path="/wishlist" noindex />
       <div className="mx-auto max-w-7xl px-5 py-12 md:px-8">
         <h1 className="section-heading text-center">Your Wishlist</h1>
         {products.length === 0 ? (

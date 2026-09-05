@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
 import api from '../services/api';
+import Seo from '../components/Seo';
+import { breadcrumbSchema } from '../utils/structuredData';
 
 const initial = { name: '', email: '', phone: '', bagType: '', size: '', colors: '', materials: '', budgetRange: '', description: '' };
 
@@ -32,7 +33,12 @@ const CustomRequest = () => {
 
   return (
     <>
-      <Helmet><title>Request a Custom Bag | FilatoCo</title></Helmet>
+      <Seo
+        title="Request a Custom Handmade Bag | FilatoCo"
+        description="Commission a one-of-a-kind handmade bag from FilatoCo. Tell us your preferred style, size, colors and materials, and we'll bring your custom crochet or tapestry purse to life."
+        path="/custom-request"
+        jsonLd={breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Custom Request', path: '/custom-request' }])}
+      />
       <div className="mx-auto max-w-2xl px-5 py-16 md:px-8">
         <h1 className="section-heading text-center">Request a Custom Bag</h1>
         <p className="mx-auto mt-3 max-w-lg text-center text-brown/60">

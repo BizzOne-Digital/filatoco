@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '../components/Seo';
 import toast from 'react-hot-toast';
 import api from '../services/api';
 
@@ -23,7 +23,7 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <Helmet><title>Forgot Password | FilatoCo</title></Helmet>
+      <Seo title="Forgot Password | FilatoCo" path="/forgot-password" noindex />
       <div className="mx-auto max-w-md px-5 py-16 md:px-8">
         <h1 className="section-heading text-center">Reset Your Password</h1>
         {sent ? (
