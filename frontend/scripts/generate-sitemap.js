@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SITE_ORIGIN = 'https://filatoco.ca';
+const SITE_ORIGIN = process.env.VITE_SITE_URL || 'https://filatoco.ca';
 const API_BASE = process.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
 const STATIC_PAGES = [

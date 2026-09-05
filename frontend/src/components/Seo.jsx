@@ -1,7 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 
 export const SITE_NAME = 'FilatoCo';
-export const SITE_ORIGIN = 'https://filatoco.ca';
+
+// Equivalent of a Next.js NEXT_PUBLIC_SITE_URL: configurable per environment,
+// falls back to the production domain if unset (e.g. local dev without a
+// .env override). Set VITE_SITE_URL in frontend/.env for other environments.
+export const getSiteUrl = () => import.meta.env.VITE_SITE_URL || 'https://filatoco.ca';
+
+export const SITE_ORIGIN = getSiteUrl();
 export const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/logo.png`;
 
 /**
@@ -12,7 +18,7 @@ export const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/logo.png`;
  * og:url are built from it against SITE_ORIGIN so they stay correct
  * regardless of which domain currently serves the app.
  */
-const Seo = ({ title, description, path = '/', image = DEFAULT_OG_IMAGE, noindex = false, type = 'website', jsonLd }) => {
+const Seo = ({ title, description, path = '/', image = DEFAULT_OG_IMAGE, noindex = false, type = 'website', keywords, jsonLd }) => {
   const url = `${SITE_ORIGIN}${path}`;
   const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
@@ -20,6 +26,7 @@ const Seo = ({ title, description, path = '/', image = DEFAULT_OG_IMAGE, noindex
     <Helmet>
       <title>{title}</title>
       {description && <meta name="description" content={description} />}
+      {keywords && <meta name="keywords" content={Array.isArray(keywords) ? keywords.join(', ') : keywords} />}
       <link rel="canonical" href={url} />
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
 

@@ -46,6 +46,7 @@ const Home = () => {
       <Seo
         title="FilatoCo | Handmade Crochet &amp; Tapestry Purses, Made with Heart"
         description="Shop handmade crochet and tapestry purses from FilatoCo — thoughtfully crafted shoulder bags, totes, crossbody bags and clutches, each one-of-a-kind and made with passion in Canada."
+        keywords="handmade purses, crochet bags, tapestry bags, handmade handbags Canada, one-of-a-kind purses, artisan crochet purses"
         path="/"
       />
 
