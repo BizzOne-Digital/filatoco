@@ -107,7 +107,7 @@ const Shop = () => {
                   { src: '/material-fabric-1.jpg', label: 'Folded Fabric Detail' },
                   { src: '/material-fabric-2.jpg', label: 'Rolled Fabric Bolts' },
                   { src: '/material-brocade.jpg', label: 'Brocade Pattern Detail' },
-                  { src: '/material-spools-2.jpg', label: 'Thread Colors' },
+                  { src: '/material-spools-1.jpg', label: 'Ribbon & Twine' },
                 ].map((item) => (
                   <div key={item.src}>
                     <img src={item.src} alt={item.label} className="aspect-square w-full rounded-lg object-cover" />

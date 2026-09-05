@@ -19,6 +19,7 @@ export default {
         serif: ['"Cormorant Garamond"', '"Playfair Display"', 'Georgia', 'serif'],
         sans: ['Inter', '"DM Sans"', 'system-ui', 'sans-serif'],
         hand: ['"Caveat"', 'cursive'],
+        heading: ['"Shadows Into Light Two"', 'cursive'],
       },
       borderRadius: {
         xl2: '1.25rem',

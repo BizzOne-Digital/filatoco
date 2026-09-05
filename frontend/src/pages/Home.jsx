@@ -51,7 +51,7 @@ const Home = () => {
       {/* HERO */}
       <section
         className="relative overflow-hidden bg-cover bg-center px-5 py-24 md:px-8 md:py-36"
-        style={{ backgroundImage: "url('/hero.png')" }}
+        style={{ backgroundImage: "url('/hero1.png')" }}
       >
         <div className="relative mx-auto max-w-7xl">
           <motion.div
@@ -61,7 +61,7 @@ const Home = () => {
             className="max-w-xl rounded-xl2 bg-cream p-6 shadow-soft md:p-8"
           >
             <span className="label-eyebrow">Handmade With Heart</span>
-            <h1 className="mt-4 font-serif text-4xl leading-tight text-brown md:text-6xl">
+            <h1 className="mt-4 font-heading text-5xl leading-tight text-brown md:text-7xl">
               Handmade Purses <br /> That Tell a Story
             </h1>
             <p className="mt-6 max-w-md text-brown/70">
@@ -150,7 +150,7 @@ const Home = () => {
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
         <div className="grid overflow-hidden rounded-xl2 shadow-soft md:grid-cols-2">
           <Reveal className="flex flex-col justify-center bg-brown p-10 text-cream">
-            <h2 className="font-serif text-3xl md:text-4xl">Crafted by Hand. Made with Care.</h2>
+            <h2 className="font-heading text-4xl md:text-5xl">Crafted by Hand. Made with Care.</h2>
             <p className="mt-4 text-cream/85">
               From the first stitch to the final detail, every FilatoCo purse is handmade with attention to quality,
               creativity and timeless craftsmanship.
@@ -205,7 +205,7 @@ const Home = () => {
       {/* CUSTOM MADE CTA */}
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
         <Reveal className="rounded-xl2 bg-brown px-8 py-16 text-center text-cream">
-          <h2 className="font-serif text-3xl md:text-4xl">Made Especially for You</h2>
+          <h2 className="font-heading text-4xl md:text-5xl">Made Especially for You</h2>
           <p className="mx-auto mt-4 max-w-xl text-cream/80">
             Looking for something uniquely yours? Contact FilatoCo to discuss a custom handmade bag created around your
             preferred colors, materials and style.
@@ -256,7 +256,7 @@ const Home = () => {
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
         <Reveal className="flex flex-col items-center gap-6 rounded-xl2 bg-beige px-8 py-12 text-center md:flex-row md:justify-between md:text-left">
           <div>
-            <h2 className="font-serif text-2xl text-brown md:text-3xl">Personal Appointments Available</h2>
+            <h2 className="font-heading text-3xl text-brown md:text-4xl">Personal Appointments Available</h2>
             <p className="mt-2 text-brown/70">Let's create something beautiful together.</p>
           </div>
           <div className="flex flex-col gap-2 text-sm text-brown/80 md:items-end">

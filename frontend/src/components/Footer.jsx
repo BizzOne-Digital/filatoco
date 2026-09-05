@@ -5,7 +5,7 @@ const Footer = () => (
   <footer className="border-t border-beige bg-cream">
     <div className="mx-auto grid max-w-7xl grid-cols-2 gap-10 px-5 py-14 md:grid-cols-5 md:px-8">
       <div className="col-span-2">
-        <img src="/logo.png" alt="FilatoCo" className="h-10 w-auto" />
+        <img src="/logo.png" alt="FilatoCo" className="h-14 w-auto" />
         <p className="mt-3 max-w-xs text-sm text-brown/70">
           Handmade crochet, tapestry and sewn purses crafted with passion, individuality and care.
         </p>

@@ -31,5 +31,5 @@ html {
 }
 
 .section-heading {
-  @apply font-serif text-3xl md:text-4xl text-brown;
+  @apply font-heading text-4xl md:text-5xl text-brown;
 }
