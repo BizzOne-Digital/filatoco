@@ -104,9 +104,9 @@ const Shop = () => {
             {activeCategory.name === 'Tapestry' && (
               <div className="grid grid-cols-2 gap-3 border-t border-beige p-3 sm:grid-cols-4">
                 {[
-                  { src: '/material-fabric-1.jpg', label: 'Woven Tapestry Fabric' },
-                  { src: '/material-fabric-2.jpg', label: 'Folded Fabric Detail' },
-                  { src: '/material-spools-1.jpg', label: 'Ribbon & Twine' },
+                  { src: '/material-fabric-1.jpg', label: 'Folded Fabric Detail' },
+                  { src: '/material-fabric-2.jpg', label: 'Rolled Fabric Bolts' },
+                  { src: '/material-brocade.jpg', label: 'Brocade Pattern Detail' },
                   { src: '/material-spools-2.jpg', label: 'Thread Colors' },
                 ].map((item) => (
                   <div key={item.src}>
