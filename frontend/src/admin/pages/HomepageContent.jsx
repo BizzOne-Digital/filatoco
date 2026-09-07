@@ -37,7 +37,7 @@ const HomepageContent = () => {
     }
   };
 
-  if (!content) return <p className="text-brown/50">Loading...</p>;
+  if (!content) return <p className="text-brown/70">Loading...</p>;
 
   return (
     <div>
@@ -46,16 +46,16 @@ const HomepageContent = () => {
         <input placeholder="Hero Heading" value={form.heroHeading} onChange={(e) => setForm({ ...form, heroHeading: e.target.value })} className="w-full rounded-lg border border-beige px-4 py-2 text-sm" />
         <textarea placeholder="Hero Subtext" value={form.heroSubtext} onChange={(e) => setForm({ ...form, heroSubtext: e.target.value })} className="w-full rounded-lg border border-beige px-4 py-2 text-sm" />
         <div>
-          <label className="mb-1 block text-sm text-brown/70">Hero Image {content.heroImage?.url && '(uploaded)'}</label>
+          <label className="mb-1 block text-sm text-brown/85">Hero Image {content.heroImage?.url && '(uploaded)'}</label>
           <input type="file" accept="image/*" onChange={(e) => setFiles({ ...files, heroImage: e.target.files[0] })} className="w-full text-sm" />
         </div>
         <input placeholder="About Heading" value={form.aboutHeading} onChange={(e) => setForm({ ...form, aboutHeading: e.target.value })} className="w-full rounded-lg border border-beige px-4 py-2 text-sm" />
         <div>
-          <label className="mb-1 block text-sm text-brown/70">About / Founder Image {content.aboutImage?.url && '(uploaded)'}</label>
+          <label className="mb-1 block text-sm text-brown/85">About / Founder Image {content.aboutImage?.url && '(uploaded)'}</label>
           <input type="file" accept="image/*" onChange={(e) => setFiles({ ...files, aboutImage: e.target.files[0] })} className="w-full text-sm" />
         </div>
         <div>
-          <label className="mb-1 block text-sm text-brown/70">Process / Studio Image {content.processImage?.url && '(uploaded)'}</label>
+          <label className="mb-1 block text-sm text-brown/85">Process / Studio Image {content.processImage?.url && '(uploaded)'}</label>
           <input type="file" accept="image/*" onChange={(e) => setFiles({ ...files, processImage: e.target.files[0] })} className="w-full text-sm" />
         </div>
         <button type="submit" disabled={saving} className="btn-primary w-full">{saving ? 'Saving...' : 'Save Homepage Content'}</button>

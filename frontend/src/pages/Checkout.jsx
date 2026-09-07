@@ -67,7 +67,7 @@ const Checkout = () => {
             <input name="country" required value={form.country} onChange={handleChange} placeholder="Country" className="w-full rounded-lg border border-beige bg-offwhite px-4 py-3 text-sm" />
             <textarea name="notes" value={form.notes} onChange={handleChange} placeholder="Order notes (optional)" rows={3} className="w-full rounded-lg border border-beige bg-offwhite px-4 py-3 text-sm" />
 
-            <div className="rounded-lg bg-beige/50 p-4 text-sm text-brown/70">
+            <div className="rounded-lg bg-beige/50 p-4 text-sm text-brown/85">
               Payment is collected securely after order review. Our team will contact you to confirm payment details for this handmade order.
             </div>
 

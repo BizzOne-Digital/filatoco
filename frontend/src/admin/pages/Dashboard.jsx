@@ -3,7 +3,7 @@ import api from '../../services/api';
 
 const StatCard = ({ label, value }) => (
   <div className="rounded-xl2 bg-offwhite p-5 shadow-soft">
-    <p className="text-xs uppercase tracking-wider text-brown/50">{label}</p>
+    <p className="text-xs uppercase tracking-wider text-brown/70">{label}</p>
     <p className="mt-2 font-serif text-3xl text-brown">{value}</p>
   </div>
 );
@@ -15,7 +15,7 @@ const Dashboard = () => {
     api.get('/admin/dashboard').then(({ data }) => setStats(data));
   }, []);
 
-  if (!stats) return <p className="text-brown/50">Loading dashboard...</p>;
+  if (!stats) return <p className="text-brown/70">Loading dashboard...</p>;
 
   return (
     <div>
@@ -51,7 +51,7 @@ const Dashboard = () => {
             {stats.recentMessages.map((m) => (
               <li key={m._id} className="border-b border-beige pb-2">
                 <p className="font-medium">{m.fullName}</p>
-                <p className="text-brown/50">{m.subject || m.message.slice(0, 60)}</p>
+                <p className="text-brown/70">{m.subject || m.message.slice(0, 60)}</p>
               </li>
             ))}
             {stats.recentMessages.length === 0 && <p className="text-brown/40">No messages yet.</p>}

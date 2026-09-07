@@ -5,7 +5,9 @@ export default {
     extend: {
       colors: {
         // Brand-approved "Earthy Vibes" palette (client-confirmed via Instagram, see conversation).
-        cream: '#F8F4EC',
+        // "cream" deepened per client request (Sept 2026) to a warmer beige/taupe,
+        // referencing Benjamin Moore Hazlewood/Evening Gown/Thunder swatches ("along those lines").
+        cream: '#D8C7AC',
         beige: '#E7E5D9',
         terracotta: '#AE887B',
         sage: '#C3C1AB',

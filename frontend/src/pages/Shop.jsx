@@ -110,7 +110,7 @@ const Shop = () => {
               )}
               <div className="px-5 py-4 sm:py-0">
                 <h2 className="font-serif text-xl text-brown">{activeCategory.name}</h2>
-                {activeCategory.description && <p className="mt-1 text-sm text-brown/70">{activeCategory.description}</p>}
+                {activeCategory.description && <p className="mt-1 text-sm text-brown/85">{activeCategory.description}</p>}
               </div>
             </div>
             {activeCategory.name === 'Tapestry' && (
@@ -123,7 +123,7 @@ const Shop = () => {
                 ].map((item) => (
                   <div key={item.src}>
                     <img src={item.src} alt={item.label} className="aspect-square w-full rounded-lg object-cover" />
-                    <p className="mt-1.5 text-center text-xs text-brown/60">{item.label}</p>
+                    <p className="mt-1.5 text-center text-xs text-brown/80">{item.label}</p>
                   </div>
                 ))}
               </div>
@@ -132,9 +132,9 @@ const Shop = () => {
         )}
 
         {loading ? (
-          <p className="mt-16 text-center text-brown/50">Loading products...</p>
+          <p className="mt-16 text-center text-brown/70">Loading products...</p>
         ) : products.length === 0 ? (
-          <p className="mt-16 text-center text-brown/50">No products found. Try adjusting your filters.</p>
+          <p className="mt-16 text-center text-brown/70">No products found. Try adjusting your filters.</p>
         ) : (
           <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-4">
             {products.map((p) => <ProductCard key={p._id} product={p} />)}

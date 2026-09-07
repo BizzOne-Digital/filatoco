@@ -42,10 +42,10 @@ const Contact = () => {
       />
       <div className="mx-auto max-w-5xl px-5 py-16 md:px-8">
         <h1 className="section-heading text-center">Let's Connect</h1>
-        <p className="mx-auto mt-3 max-w-lg text-center text-brown/60">Personal appointments available — let's create something beautiful together.</p>
+        <p className="mx-auto mt-3 max-w-lg text-center text-brown/80">Personal appointments available — let's create something beautiful together.</p>
 
         <div className="mt-12 grid gap-10 md:grid-cols-2">
-          <div className="space-y-4 text-brown/70">
+          <div className="space-y-4 text-brown/85">
             <p className="flex items-center gap-3"><Phone size={18} className="text-terracotta" /> 905 5165462</p>
             <p className="flex items-center gap-3"><Mail size={18} className="text-terracotta" /> mirellascarcelli@gmail.com</p>
             <p className="flex items-center gap-3"><Instagram size={18} className="text-terracotta" /> @filatoco</p>

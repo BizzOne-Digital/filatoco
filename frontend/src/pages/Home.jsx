@@ -66,7 +66,7 @@ const Home = () => {
             <h1 className="mt-4 font-heading text-5xl leading-tight text-brown md:text-7xl">
               Handmade Purses <br /> That Tell a Story
             </h1>
-            <p className="mt-6 max-w-md text-brown/70">
+            <p className="mt-6 max-w-md text-brown/85">
               {content?.heroSubtext ||
                 'Thoughtfully handcrafted crochet, tapestry and sewn bags created with passion, individuality and timeless craftsmanship.'}
             </p>
@@ -91,7 +91,7 @@ const Home = () => {
               <ProductCard product={p} />
             </Reveal>
           ))}
-          {featured.length === 0 && <p className="col-span-full text-center text-brown/50">Featured products will appear here once added in Admin.</p>}
+          {featured.length === 0 && <p className="col-span-full text-center text-brown/70">Featured products will appear here once added in Admin.</p>}
         </div>
       </section>
 
@@ -106,12 +106,12 @@ const Home = () => {
           <Reveal delay={0.15}>
             <span className="label-eyebrow">About FilatoCo</span>
             <h2 className="section-heading mt-2">{content?.aboutHeading || 'A Passion Woven from Peace & Purpose'}</h2>
-            <p className="mt-4 text-brown/70">
+            <p className="mt-4 text-brown/85">
               FilatoCo was born from a search for peace—one loop, one stitch, one quiet moment at a time. With a family
               background in tailoring and a deep love for handmade beauty, I create purses that are as unique as the
               women who carry them.
             </p>
-            <p className="mt-4 text-brown/70">
+            <p className="mt-4 text-brown/85">
               Every piece is crafted with care, intention, and the belief that handmade is more than a bag—it's a story.
             </p>
             <Link to="/about" className="btn-secondary mt-6 inline-flex">Read My Story</Link>
@@ -134,7 +134,7 @@ const Home = () => {
                   {c.image?.url ? (
                     <img src={c.image.url} alt={c.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   ) : (
-                    <div className="flex h-full items-center justify-center bg-taupe/30 text-brown/50">{c.name}</div>
+                    <div className="flex h-full items-center justify-center bg-taupe/30 text-brown/70">{c.name}</div>
                   )}
                 </div>
                 <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
@@ -181,7 +181,7 @@ const Home = () => {
             <Reveal key={f.title} delay={i * 0.08} className={`rounded-xl2 ${f.bg} p-6 text-center shadow-soft`}>
               <f.icon className="mx-auto mb-3 text-terracotta" size={26} />
               <p className="font-serif text-lg text-brown">{f.title}</p>
-              <p className="mt-1 text-sm text-brown/70">{f.text}</p>
+              <p className="mt-1 text-sm text-brown/85">{f.text}</p>
             </Reveal>
           ))}
         </div>
@@ -229,7 +229,7 @@ const Home = () => {
             {testimonials.slice(0, 3).map((t, i) => (
               <Reveal key={t._id} className={`rounded-xl2 p-6 shadow-soft ${['bg-blush/40', 'bg-taupe/35', 'bg-sage/30'][i % 3]}`}>
                 <div className="mb-2 text-terracotta">{'★'.repeat(t.rating)}</div>
-                <p className="text-sm text-brown/70">"{t.review}"</p>
+                <p className="text-sm text-brown/85">"{t.review}"</p>
                 <p className="mt-4 text-sm font-medium text-brown">— {t.customerName}</p>
               </Reveal>
             ))}
@@ -242,7 +242,7 @@ const Home = () => {
         <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
           <Reveal className="text-center">
             <h2 className="section-heading">Follow the FilatoCo Story</h2>
-            <p className="mt-2 text-brown/60">@filatoco</p>
+            <p className="mt-2 text-brown/80">@filatoco</p>
           </Reveal>
           <div className="mt-10 grid grid-cols-3 gap-3 md:grid-cols-6">
             {gallery.map((g) => (
@@ -259,7 +259,7 @@ const Home = () => {
         <Reveal className="flex flex-col items-center gap-6 rounded-xl2 bg-beige px-8 py-12 text-center md:flex-row md:justify-between md:text-left">
           <div>
             <h2 className="font-heading text-3xl text-brown md:text-4xl">Personal Appointments Available</h2>
-            <p className="mt-2 text-brown/70">Let's create something beautiful together.</p>
+            <p className="mt-2 text-brown/85">Let's create something beautiful together.</p>
           </div>
           <div className="flex flex-col gap-2 text-sm text-brown/80 md:items-end">
             <a href="tel:9055165462" className="flex items-center gap-2"><Phone size={16} /> 905 5165462</a>
@@ -273,7 +273,7 @@ const Home = () => {
       <section className="mx-auto max-w-7xl px-5 pb-20 md:px-8">
         <div className="mx-auto max-w-3xl rounded-xl2 bg-gradient-to-br from-blush/60 via-taupe/30 to-sage/25 px-6 py-12 text-center shadow-soft">
           <h2 className="section-heading">A Little Handmade Inspiration</h2>
-          <p className="mt-2 text-brown/70">Join the FilatoCo community for new designs, collections and stories from the studio.</p>
+          <p className="mt-2 text-brown/85">Join the FilatoCo community for new designs, collections and stories from the studio.</p>
           <form onSubmit={handleSubscribe} className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <input
               type="email"

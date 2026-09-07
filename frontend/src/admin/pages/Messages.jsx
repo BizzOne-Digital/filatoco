@@ -27,8 +27,8 @@ const Messages = () => {
           <div key={m._id} onClick={() => !m.isRead && markRead(m._id)} className={`flex items-start justify-between rounded-xl2 p-4 shadow-soft ${m.isRead ? 'bg-offwhite' : 'bg-beige'}`}>
             <div>
               <p className="font-medium text-brown">{m.fullName} — {m.email}</p>
-              <p className="text-xs text-brown/50">{m.subject} · {new Date(m.createdAt).toLocaleString()}</p>
-              <p className="mt-1 text-sm text-brown/70">{m.message}</p>
+              <p className="text-xs text-brown/70">{m.subject} · {new Date(m.createdAt).toLocaleString()}</p>
+              <p className="mt-1 text-sm text-brown/85">{m.message}</p>
             </div>
             <button onClick={(e) => { e.stopPropagation(); handleDelete(m._id); }} className="text-brown hover:text-red-600"><Trash2 size={16} /></button>
           </div>

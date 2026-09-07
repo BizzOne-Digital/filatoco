@@ -14,7 +14,7 @@ const Customers = () => {
       <div className="mt-6 overflow-x-auto rounded-xl2 bg-offwhite shadow-soft">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-beige text-left text-brown/50">
+            <tr className="border-b border-beige text-left text-brown/70">
               <th className="p-4">Name</th><th className="p-4">Email</th><th className="p-4">Phone</th><th className="p-4">Joined</th>
             </tr>
           </thead>

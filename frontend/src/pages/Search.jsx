@@ -32,8 +32,8 @@ const Search = () => {
             className="w-full rounded-full border border-beige bg-offwhite py-3 pl-11 pr-4 text-sm"
           />
         </div>
-        {loading && <p className="mt-10 text-center text-brown/50">Searching...</p>}
-        {!loading && q && products.length === 0 && <p className="mt-10 text-center text-brown/50">No results for "{q}".</p>}
+        {loading && <p className="mt-10 text-center text-brown/70">Searching...</p>}
+        {!loading && q && products.length === 0 && <p className="mt-10 text-center text-brown/70">No results for "{q}".</p>}
         <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-4">
           {products.map((p) => <ProductCard key={p._id} product={p} />)}
         </div>

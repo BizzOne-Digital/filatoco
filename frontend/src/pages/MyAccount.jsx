@@ -63,20 +63,20 @@ const MyAccount = () => {
           {tab === 'Overview' && (
             <div className="rounded-xl2 bg-offwhite p-6 shadow-soft">
               <p className="text-brown">Welcome back, {user?.firstName}!</p>
-              <p className="mt-2 text-sm text-brown/60">{user?.email}</p>
+              <p className="mt-2 text-sm text-brown/80">{user?.email}</p>
             </div>
           )}
 
           {tab === 'Orders' && (
             <div className="space-y-4">
-              {orders.length === 0 && <p className="text-brown/50">No orders yet.</p>}
+              {orders.length === 0 && <p className="text-brown/70">No orders yet.</p>}
               {orders.map((o) => (
                 <div key={o._id} className="rounded-xl2 bg-offwhite p-5 shadow-soft">
                   <div className="flex justify-between text-sm">
                     <span className="font-medium text-brown">#{o.orderNumber}</span>
                     <span className="capitalize text-terracotta">{o.status}</span>
                   </div>
-                  <p className="mt-1 text-sm text-brown/60">{new Date(o.createdAt).toLocaleDateString()} · ${o.total.toFixed(2)}</p>
+                  <p className="mt-1 text-sm text-brown/80">{new Date(o.createdAt).toLocaleDateString()} · ${o.total.toFixed(2)}</p>
                 </div>
               ))}
             </div>

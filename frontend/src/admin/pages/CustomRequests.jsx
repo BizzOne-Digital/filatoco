@@ -25,8 +25,8 @@ const CustomRequests = () => {
             {r.referenceImage?.url && <img src={r.referenceImage.url} alt="" className="h-20 w-20 rounded-lg object-cover" />}
             <div className="flex-1">
               <p className="font-medium text-brown">{r.name} — {r.email}</p>
-              <p className="text-sm text-brown/60">{r.bagType} · {r.size} · {r.colors} · {r.budgetRange}</p>
-              <p className="mt-1 text-sm text-brown/70">{r.description}</p>
+              <p className="text-sm text-brown/80">{r.bagType} · {r.size} · {r.colors} · {r.budgetRange}</p>
+              <p className="mt-1 text-sm text-brown/85">{r.description}</p>
             </div>
             <select value={r.status} onChange={(e) => updateStatus(r._id, e.target.value)} className="h-fit rounded-lg border border-beige px-2 py-1 text-xs capitalize">
               {statuses.map((s) => <option key={s} value={s}>{s}</option>)}

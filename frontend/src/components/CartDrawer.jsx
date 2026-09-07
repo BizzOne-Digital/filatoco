@@ -31,7 +31,7 @@ const CartDrawer = () => {
 
             <div className="flex-1 overflow-y-auto p-5">
               {items.length === 0 ? (
-                <p className="mt-10 text-center text-sm text-brown/60">Your bag is empty.</p>
+                <p className="mt-10 text-center text-sm text-brown/80">Your bag is empty.</p>
               ) : (
                 <ul className="space-y-5">
                   {items.map((item) => (
@@ -44,7 +44,7 @@ const CartDrawer = () => {
                           <button onClick={() => updateQuantity(item.productId, item.quantity - 1)} className="rounded-full border border-beige p-1"><Minus size={14} /></button>
                           <span className="text-sm">{item.quantity}</span>
                           <button onClick={() => updateQuantity(item.productId, item.quantity + 1)} className="rounded-full border border-beige p-1"><Plus size={14} /></button>
-                          <button onClick={() => removeItem(item.productId)} className="ml-2 text-brown/50 hover:text-terracotta"><Trash2 size={16} /></button>
+                          <button onClick={() => removeItem(item.productId)} className="ml-2 text-brown/70 hover:text-terracotta"><Trash2 size={16} /></button>
                         </div>
                       </div>
                     </li>

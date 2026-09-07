@@ -62,7 +62,7 @@ const Testimonials = () => {
             <div key={t._id} className="flex items-center justify-between rounded-xl2 bg-offwhite p-4 shadow-soft">
               <div>
                 <p className="font-medium text-brown">{t.customerName} ({t.rating}★)</p>
-                <p className="text-sm text-brown/60">{t.review}</p>
+                <p className="text-sm text-brown/80">{t.review}</p>
               </div>
               <div className="flex items-center gap-3">
                 <button onClick={() => togglePublish(t)} className={`rounded-full px-3 py-1 text-xs ${t.isPublished ? 'bg-brown text-cream' : 'border border-beige text-brown'}`}>

@@ -140,7 +140,7 @@ const ProductForm = ({ product, onClose, onSaved }) => {
           <input placeholder="SEO Description" value={form.seoDescription} onChange={set('seoDescription')} className="w-full rounded-lg border border-beige px-4 py-2 text-sm" />
 
           <div>
-            <label className="mb-1 block text-sm text-brown/70">Product Images — max {MAX_IMAGE_MB}MB each</label>
+            <label className="mb-1 block text-sm text-brown/85">Product Images — max {MAX_IMAGE_MB}MB each</label>
             <input
               type="file"
               multiple

@@ -40,7 +40,7 @@ const Register = () => {
           <input type="password" required minLength={8} placeholder="Password (min 8 characters)" value={form.password} onChange={set('password')} className="w-full rounded-lg border border-beige bg-offwhite px-4 py-3 text-sm" />
           <button type="submit" disabled={loading} className="btn-primary w-full">{loading ? 'Creating account...' : 'Create Account'}</button>
         </form>
-        <p className="mt-6 text-center text-sm text-brown/60">
+        <p className="mt-6 text-center text-sm text-brown/80">
           Already have an account? <Link to="/login" className="text-terracotta">Sign in</Link>
         </p>
       </div>

@@ -30,7 +30,7 @@ const Orders = () => {
       <div className="mt-6 overflow-x-auto rounded-xl2 bg-offwhite shadow-soft">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-beige text-left text-brown/50">
+            <tr className="border-b border-beige text-left text-brown/70">
               <th className="p-4">Order #</th>
               <th className="p-4">Customer</th>
               <th className="p-4">Total</th>
@@ -43,7 +43,7 @@ const Orders = () => {
             {orders.map((o) => (
               <tr key={o._id} className="border-b border-beige">
                 <td className="p-4">{o.orderNumber}</td>
-                <td className="p-4">{o.customer.firstName} {o.customer.lastName}<br /><span className="text-xs text-brown/50">{o.customer.email}</span></td>
+                <td className="p-4">{o.customer.firstName} {o.customer.lastName}<br /><span className="text-xs text-brown/70">{o.customer.email}</span></td>
                 <td className="p-4">${o.total.toFixed(2)}</td>
                 <td className="p-4 capitalize">{o.paymentStatus}</td>
                 <td className="p-4">

@@ -41,7 +41,7 @@ const CustomRequest = () => {
       />
       <div className="mx-auto max-w-2xl px-5 py-16 md:px-8">
         <h1 className="section-heading text-center">Request a Custom Bag</h1>
-        <p className="mx-auto mt-3 max-w-lg text-center text-brown/60">
+        <p className="mx-auto mt-3 max-w-lg text-center text-brown/80">
           Tell us about the bag you're dreaming of and we'll bring it to life, stitch by stitch.
         </p>
         <form onSubmit={handleSubmit} className="mt-10 space-y-4">
@@ -61,7 +61,7 @@ const CustomRequest = () => {
           <input placeholder="Budget Range" value={form.budgetRange} onChange={set('budgetRange')} className="w-full rounded-lg border border-beige bg-offwhite px-4 py-3 text-sm" />
           <textarea required rows={4} placeholder="Describe your dream bag" value={form.description} onChange={set('description')} className="w-full rounded-lg border border-beige bg-offwhite px-4 py-3 text-sm" />
           <div>
-            <label className="mb-1 block text-sm text-brown/70">Reference Image (optional)</label>
+            <label className="mb-1 block text-sm text-brown/85">Reference Image (optional)</label>
             <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} className="w-full text-sm" />
           </div>
           <button type="submit" disabled={loading} className="btn-primary w-full">{loading ? 'Submitting...' : 'Submit Request'}</button>

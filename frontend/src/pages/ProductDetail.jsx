@@ -33,7 +33,7 @@ const ProductDetail = () => {
       .catch(() => navigate('/shop'));
   }, [slug, navigate]);
 
-  if (!product) return <div className="flex min-h-[50vh] items-center justify-center text-brown/50">Loading...</div>;
+  if (!product) return <div className="flex min-h-[50vh] items-center justify-center text-brown/70">Loading...</div>;
 
   const images = product.images?.length ? product.images : [{ url: '/placeholder-bag.svg' }];
   const styleLabel = STYLE_LABELS[product.productType] || 'Bag';
@@ -82,9 +82,9 @@ const ProductDetail = () => {
               <span className="text-xl text-terracotta">${product.price.toFixed(2)}</span>
               {product.comparePrice > product.price && <span className="text-brown/40 line-through">${product.comparePrice.toFixed(2)}</span>}
             </div>
-            <p className="mt-5 text-brown/70">{product.description}</p>
+            <p className="mt-5 text-brown/85">{product.description}</p>
 
-            <dl className="mt-5 space-y-1 text-sm text-brown/70">
+            <dl className="mt-5 space-y-1 text-sm text-brown/85">
               {product.materials?.length > 0 && <div><dt className="inline font-medium">Material: </dt><dd className="inline">{product.materials.join(', ')}</dd></div>}
               {product.colors?.length > 0 && <div><dt className="inline font-medium">Color: </dt><dd className="inline">{product.colors.join(', ')}</dd></div>}
               {product.dimensions && <div><dt className="inline font-medium">Dimensions: </dt><dd className="inline">{product.dimensions}</dd></div>}
@@ -116,19 +116,19 @@ const ProductDetail = () => {
                 Buy Now
               </button>
             </div>
-            <p className="mt-4 text-xs text-brown/50">Handmade to order — ships within 5–10 business days. See shipping &amp; returns for details.</p>
+            <p className="mt-4 text-xs text-brown/70">Handmade to order — ships within 5–10 business days. See shipping &amp; returns for details.</p>
           </div>
         </div>
 
         <div className="mt-16">
           <div className="flex gap-6 border-b border-beige">
             {['details', 'care', 'shipping'].map((t) => (
-              <button key={t} onClick={() => setTab(t)} className={`pb-3 text-sm font-medium capitalize ${tab === t ? 'border-b-2 border-terracotta text-brown' : 'text-brown/50'}`}>
+              <button key={t} onClick={() => setTab(t)} className={`pb-3 text-sm font-medium capitalize ${tab === t ? 'border-b-2 border-terracotta text-brown' : 'text-brown/70'}`}>
                 {t === 'care' ? 'Care Instructions' : t === 'shipping' ? 'Shipping & Returns' : 'Product Details'}
               </button>
             ))}
           </div>
-          <div className="py-6 text-sm text-brown/70">
+          <div className="py-6 text-sm text-brown/85">
             {tab === 'details' && <p>{product.description}</p>}
             {tab === 'care' && <p>Hand wash cold with mild soap and lay flat to dry. Avoid direct sunlight and store in a dust bag. See our full <Link to="/care-instructions" className="text-terracotta underline">Care Instructions</Link>.</p>}
             {tab === 'shipping' && <p>Handmade items ship within 5–10 business days. See our <Link to="/shipping-returns" className="text-terracotta underline">Shipping &amp; Returns</Link> policy.</p>}

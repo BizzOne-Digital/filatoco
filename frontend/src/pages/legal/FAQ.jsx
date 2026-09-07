@@ -42,7 +42,7 @@ const FAQ = () => {
                 <span className="font-medium">{f.q}</span>
                 <ChevronDown size={18} className={`transition-transform ${open === i ? 'rotate-180' : ''}`} />
               </button>
-              {open === i && <p className="px-5 pb-4 text-sm text-brown/70">{f.a}</p>}
+              {open === i && <p className="px-5 pb-4 text-sm text-brown/85">{f.a}</p>}
             </div>
           ))}
         </div>

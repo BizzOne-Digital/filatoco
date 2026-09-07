@@ -26,7 +26,7 @@ const Wishlist = () => {
         <h1 className="section-heading text-center">Your Wishlist</h1>
         {products.length === 0 ? (
           <div className="mt-10 text-center">
-            <p className="text-brown/50">Your wishlist is empty.</p>
+            <p className="text-brown/70">Your wishlist is empty.</p>
             <Link to="/shop" className="btn-primary mt-6 inline-flex">Browse Products</Link>
           </div>
         ) : (

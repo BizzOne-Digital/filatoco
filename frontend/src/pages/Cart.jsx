@@ -14,7 +14,7 @@ const Cart = () => {
 
         {items.length === 0 ? (
           <div className="mt-12 text-center">
-            <p className="text-brown/60">Your bag is currently empty.</p>
+            <p className="text-brown/80">Your bag is currently empty.</p>
             <Link to="/shop" className="btn-primary mt-6 inline-flex">Shop Collection</Link>
           </div>
         ) : (
@@ -30,7 +30,7 @@ const Cart = () => {
                       <button onClick={() => updateQuantity(item.productId, item.quantity - 1)} className="rounded-full border border-beige p-1"><Minus size={14} /></button>
                       <span>{item.quantity}</span>
                       <button onClick={() => updateQuantity(item.productId, item.quantity + 1)} className="rounded-full border border-beige p-1"><Plus size={14} /></button>
-                      <button onClick={() => removeItem(item.productId)} className="ml-3 flex items-center gap-1 text-sm text-brown/50 hover:text-terracotta"><Trash2 size={15} /> Remove</button>
+                      <button onClick={() => removeItem(item.productId)} className="ml-3 flex items-center gap-1 text-sm text-brown/70 hover:text-terracotta"><Trash2 size={15} /> Remove</button>
                     </div>
                   </div>
                   <p className="font-medium text-brown">${(item.price * item.quantity).toFixed(2)}</p>
@@ -40,10 +40,10 @@ const Cart = () => {
 
             <div className="h-fit rounded-xl2 bg-offwhite p-6 shadow-soft">
               <h2 className="font-serif text-xl text-brown">Order Summary</h2>
-              <div className="mt-4 flex justify-between text-sm text-brown/70">
+              <div className="mt-4 flex justify-between text-sm text-brown/85">
                 <span>Subtotal</span><span>${subtotal.toFixed(2)}</span>
               </div>
-              <div className="mt-2 flex justify-between text-sm text-brown/70">
+              <div className="mt-2 flex justify-between text-sm text-brown/85">
                 <span>Shipping</span><span>Calculated at checkout</span>
               </div>
               <div className="mt-4 flex justify-between border-t border-beige pt-4 font-semibold text-brown">

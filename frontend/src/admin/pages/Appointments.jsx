@@ -24,8 +24,8 @@ const Appointments = () => {
           <div key={a._id} className="flex items-center justify-between rounded-xl2 bg-offwhite p-5 shadow-soft">
             <div>
               <p className="font-medium text-brown">{a.name} — {a.email}</p>
-              <p className="text-sm text-brown/60">{a.phone} {a.preferredDate ? `· ${new Date(a.preferredDate).toLocaleDateString()}` : ''}</p>
-              <p className="mt-1 text-sm text-brown/70">{a.message}</p>
+              <p className="text-sm text-brown/80">{a.phone} {a.preferredDate ? `· ${new Date(a.preferredDate).toLocaleDateString()}` : ''}</p>
+              <p className="mt-1 text-sm text-brown/85">{a.message}</p>
             </div>
             <select value={a.status} onChange={(e) => updateStatus(a._id, e.target.value)} className="rounded-lg border border-beige px-2 py-1 text-xs capitalize">
               {statuses.map((s) => <option key={s} value={s}>{s}</option>)}

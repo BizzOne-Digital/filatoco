@@ -56,7 +56,7 @@ const Products = () => {
         <h1 className="font-serif text-2xl text-brown">Products</h1>
         <button onClick={() => { setEditing(null); setShowForm(true); }} className="btn-primary"><Plus size={16} /> Add Product</button>
       </div>
-      <p className="mt-2 text-xs text-brown/50">Use the arrows on each card to rank products — this order controls Featured Order on the Shop page and the homepage.</p>
+      <p className="mt-2 text-xs text-brown/70">Use the arrows on each card to rank products — this order controls Featured Order on the Shop page and the homepage.</p>
 
       {showForm && (
         <ProductForm
@@ -118,7 +118,7 @@ const Products = () => {
                 <div className="mt-1 flex items-center justify-center gap-2 text-sm">
                   <span className="text-terracotta">${p.price.toFixed(2)}</span>
                   <span className="text-brown/40">&bull;</span>
-                  <span className={p.stock > 0 ? 'text-brown/60' : 'text-red-500'}>{p.stock > 0 ? `${p.stock} in stock` : 'Out of stock'}</span>
+                  <span className={p.stock > 0 ? 'text-brown/80' : 'text-red-500'}>{p.stock > 0 ? `${p.stock} in stock` : 'Out of stock'}</span>
                 </div>
 
                 <div className="mt-3 flex justify-center gap-4 border-t border-beige pt-3">

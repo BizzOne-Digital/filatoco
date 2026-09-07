@@ -24,7 +24,7 @@ const SettingsPage = () => {
     }
   };
 
-  if (!form) return <p className="text-brown/50">Loading...</p>;
+  if (!form) return <p className="text-brown/70">Loading...</p>;
 
   return (
     <div>

@@ -24,7 +24,7 @@ const Pricing = () => {
       />
       <div className="mx-auto max-w-5xl px-5 py-16 text-center md:px-8">
         <h1 className="section-heading">Pricing</h1>
-        <p className="mx-auto mt-4 max-w-xl text-brown/70">
+        <p className="mx-auto mt-4 max-w-xl text-brown/85">
           Handmade bags generally range from <strong>${settings?.priceRangeMin || 40} – ${settings?.priceRangeMax || 120}</strong>.
           Final pricing depends on design, materials, size, complexity and customization.
         </p>

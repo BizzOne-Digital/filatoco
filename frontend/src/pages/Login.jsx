@@ -35,7 +35,7 @@ const Login = () => {
           <div className="text-right text-sm"><Link to="/forgot-password" className="text-terracotta">Forgot password?</Link></div>
           <button type="submit" disabled={loading} className="btn-primary w-full">{loading ? 'Signing in...' : 'Sign In'}</button>
         </form>
-        <p className="mt-6 text-center text-sm text-brown/60">
+        <p className="mt-6 text-center text-sm text-brown/80">
           New to FilatoCo? <Link to="/register" className="text-terracotta">Create an account</Link>
         </p>
       </div>

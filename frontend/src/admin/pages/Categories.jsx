@@ -69,7 +69,7 @@ const Categories = () => {
           <div className="flex items-center justify-between">
             <h2 className="font-medium text-brown">{editingId ? 'Edit Category' : 'Add Category'}</h2>
             {editingId && (
-              <button type="button" onClick={cancelEdit} className="text-brown/50 hover:text-terracotta" aria-label="Cancel edit">
+              <button type="button" onClick={cancelEdit} className="text-brown/70 hover:text-terracotta" aria-label="Cancel edit">
                 <X size={16} />
               </button>
             )}
@@ -80,7 +80,7 @@ const Categories = () => {
             <img src={categories.find((c) => c._id === editingId).image.url} alt="" className="h-16 w-16 rounded-lg object-cover" />
           )}
           <div>
-            <label className="mb-1 block text-xs text-brown/60">{editingId ? 'Replace image (optional)' : 'Image'} — max {MAX_IMAGE_MB}MB</label>
+            <label className="mb-1 block text-xs text-brown/80">{editingId ? 'Replace image (optional)' : 'Image'} — max {MAX_IMAGE_MB}MB</label>
             <input
               type="file"
               accept="image/*"
