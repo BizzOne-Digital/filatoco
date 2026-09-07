@@ -38,7 +38,8 @@ export const getProducts = async (req, res, next) => {
       newest: '-createdAt',
       'price-asc': 'price',
       'price-desc': '-price',
-      featured: '-isFeatured',
+      featured: '-isFeatured sortOrder',
+      manual: 'sortOrder -createdAt',
     };
     const sortBy = sortMap[sort] || '-createdAt';
 
@@ -85,7 +86,7 @@ const ALLOWED_PRODUCT_FIELDS = [
   'name', 'sku', 'description', 'shortDescription', 'price', 'comparePrice',
   'category', 'subcategory', 'materials', 'colors', 'dimensions', 'stock',
   'productType', 'madeType', 'isFeatured', 'isNewArrival', 'status',
-  'seoTitle', 'seoDescription',
+  'seoTitle', 'seoDescription', 'sortOrder',
 ];
 
 const pickAllowedFields = (body) => {

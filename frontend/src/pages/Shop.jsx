@@ -25,7 +25,7 @@ const Shop = () => {
   const productType = routeProductType || searchParams.get('productType') || '';
   const category = searchParams.get('category') || '';
   const madeType = searchParams.get('madeType') || '';
-  const sort = searchParams.get('sort') || 'newest';
+  const sort = searchParams.get('sort') || 'manual';
   const search = searchParams.get('search') || '';
   const minPrice = searchParams.get('minPrice') || '';
   const maxPrice = searchParams.get('maxPrice') || '';
@@ -92,6 +92,7 @@ const Shop = () => {
             <option value="custom-made">Custom Made</option>
           </select>
           <select value={sort} onChange={(e) => updateParam('sort', e.target.value)} className="rounded-full border border-beige bg-offwhite px-4 py-2 text-sm">
+            <option value="manual">Featured Order</option>
             <option value="newest">Newest</option>
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>

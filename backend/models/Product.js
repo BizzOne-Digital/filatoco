@@ -30,6 +30,8 @@ const productSchema = new mongoose.Schema(
     status: { type: String, enum: ['draft', 'published'], default: 'draft' },
     seoTitle: String,
     seoDescription: String,
+    // Manual display ranking — lower shows first. Admin-settable "move up/down".
+    sortOrder: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

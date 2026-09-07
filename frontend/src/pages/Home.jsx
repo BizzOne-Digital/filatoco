@@ -19,8 +19,8 @@ const Home = () => {
   const [subscribing, setSubscribing] = useState(false);
 
   useEffect(() => {
-    api.get('/products', { params: { featured: true, limit: 4 } }).then(({ data }) => setFeatured(data.products));
-    api.get('/products', { params: { newArrival: true, limit: 8 } }).then(({ data }) => setNewArrivals(data.products));
+    api.get('/products', { params: { featured: true, limit: 4, sort: 'manual' } }).then(({ data }) => setFeatured(data.products));
+    api.get('/products', { params: { newArrival: true, limit: 8, sort: 'manual' } }).then(({ data }) => setNewArrivals(data.products));
     api.get('/testimonials').then(({ data }) => setTestimonials(data.testimonials));
     api.get('/gallery').then(({ data }) => setGallery(data.items));
     api.get('/categories').then(({ data }) => setCategories(data.categories));
@@ -52,8 +52,8 @@ const Home = () => {
 
       {/* HERO */}
       <section
-        className="relative overflow-hidden bg-cover bg-center px-5 py-24 md:px-8 md:py-36"
-        style={{ backgroundImage: "url('/hero1.png')" }}
+        className="relative overflow-hidden bg-cover px-5 py-24 md:px-8 md:py-36"
+        style={{ backgroundImage: "url('/hero1.png')", backgroundPosition: 'left center' }}
       >
         <div className="relative mx-auto max-w-7xl">
           <motion.div

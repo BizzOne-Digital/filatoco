@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Plus, Edit2, Trash2, Copy, Star, Sparkles } from 'lucide-react';
+import { Plus, Edit2, Trash2, Copy, Star, Sparkles, ArrowUp, ArrowDown } from 'lucide-react';
 import api from '../../services/api';
 import ProductForm from '../components/ProductForm';
 
@@ -8,8 +8,9 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [reordering, setReordering] = useState(false);
 
-  const load = () => api.get('/products', { params: { limit: 100 } }).then(({ data }) => setProducts(data.products));
+  const load = () => api.get('/products', { params: { limit: 100, sort: 'manual' } }).then(({ data }) => setProducts(data.products));
 
   useEffect(() => { load(); }, []);
 
@@ -26,12 +27,36 @@ const Products = () => {
     load();
   };
 
+  const move = async (index, direction) => {
+    const targetIndex = index + direction;
+    if (targetIndex < 0 || targetIndex >= products.length) return;
+
+    const reordered = [...products];
+    [reordered[index], reordered[targetIndex]] = [reordered[targetIndex], reordered[index]];
+    setProducts(reordered);
+    setReordering(true);
+    try {
+      // Renumber everyone so ranking stays consistent even if sortOrder was never set before.
+      await Promise.all(reordered.map((p, i) => api.put(`/products/${p._id}`, (() => {
+        const fd = new FormData();
+        fd.append('sortOrder', i);
+        return fd;
+      })(), { headers: { 'Content-Type': 'multipart/form-data' } })));
+    } catch {
+      toast.error('Could not save new order');
+      load();
+    } finally {
+      setReordering(false);
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between">
         <h1 className="font-serif text-2xl text-brown">Products</h1>
         <button onClick={() => { setEditing(null); setShowForm(true); }} className="btn-primary"><Plus size={16} /> Add Product</button>
       </div>
+      <p className="mt-2 text-xs text-brown/50">Use the arrows on each card to rank products — this order controls Featured Order on the Shop page and the homepage.</p>
 
       {showForm && (
         <ProductForm
@@ -45,7 +70,7 @@ const Products = () => {
         <p className="mt-10 text-center text-brown/40">No products yet.</p>
       ) : (
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {products.map((p) => (
+          {products.map((p, i) => (
             <div key={p._id} className="overflow-hidden rounded-xl2 bg-offwhite shadow-soft">
               <div className="relative aspect-[4/5] bg-beige">
                 <img src={p.images?.[0]?.url} alt={p.name} className="h-full w-full object-cover" />
@@ -67,6 +92,24 @@ const Products = () => {
                       <Sparkles size={12} />
                     </span>
                   )}
+                </div>
+                <div className="absolute bottom-2 left-2 flex gap-1">
+                  <button
+                    onClick={() => move(i, -1)}
+                    disabled={i === 0 || reordering}
+                    aria-label="Move up in ranking"
+                    className="flex h-6 w-6 items-center justify-center rounded-full bg-offwhite/90 text-brown disabled:opacity-30"
+                  >
+                    <ArrowUp size={12} />
+                  </button>
+                  <button
+                    onClick={() => move(i, 1)}
+                    disabled={i === products.length - 1 || reordering}
+                    aria-label="Move down in ranking"
+                    className="flex h-6 w-6 items-center justify-center rounded-full bg-offwhite/90 text-brown disabled:opacity-30"
+                  >
+                    <ArrowDown size={12} />
+                  </button>
                 </div>
               </div>
 
