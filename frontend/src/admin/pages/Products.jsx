@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Plus, Edit2, Trash2, Copy, Star, Sparkles, ArrowUp, ArrowDown, ChevronsUp, ChevronsDown } from 'lucide-react';
+import { Plus, Edit2, Trash2, Copy, Star, Sparkles } from 'lucide-react';
 import api from '../../services/api';
 import ProductForm from '../components/ProductForm';
 
@@ -72,22 +72,6 @@ const Products = () => {
     }
   };
 
-  const move = (visibleIndex, direction) => {
-    const targetIndex = visibleIndex + direction;
-    if (targetIndex < 0 || targetIndex >= visibleProducts.length) return;
-    const reordered = [...visibleProducts];
-    [reordered[visibleIndex], reordered[targetIndex]] = [reordered[targetIndex], reordered[visibleIndex]];
-    saveOrder(reordered);
-  };
-
-  const moveToEnd = (visibleIndex, toStart) => {
-    const reordered = [...visibleProducts];
-    const [item] = reordered.splice(visibleIndex, 1);
-    if (toStart) reordered.unshift(item);
-    else reordered.push(item);
-    saveOrder(reordered);
-  };
-
   const moveToRank = (productId, rawRank) => {
     const targetIndex = Math.min(Math.max(0, Number(rawRank) - 1), visibleProducts.length - 1);
     if (Number.isNaN(targetIndex)) return;
@@ -106,8 +90,8 @@ const Products = () => {
         <button onClick={() => { setEditing(null); setShowForm(true); }} className="btn-primary"><Plus size={16} /> Add Product</button>
       </div>
       <p className="mt-2 text-xs text-brown/70">
-        Type a number in the # box to rank a product directly, or use the arrows. This order controls Featured Order
-        on the Shop page and the homepage. Filter by category to rank products within that category only.
+        Type a rank number on any product and press Enter to reorder it. This order controls Featured Order on the
+        Shop page and the homepage. Filter by category to rank products within that category only.
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2">
@@ -163,7 +147,8 @@ const Products = () => {
                     </span>
                   )}
                 </div>
-                <div className="absolute bottom-2 left-2 flex items-center gap-1">
+                <div className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-offwhite/90 px-2 py-1">
+                  <span className="text-[10px] uppercase tracking-wide text-brown/60">Rank</span>
                   <input
                     type="number"
                     min={1}
@@ -178,44 +163,8 @@ const Products = () => {
                     disabled={reordering}
                     aria-label="Rank position"
                     title="Type a rank number and press Enter"
-                    className="h-6 w-10 rounded-full bg-offwhite/90 text-center text-[11px] text-brown"
+                    className="h-6 w-12 rounded-full border border-beige text-center text-[11px] text-brown"
                   />
-                  <button
-                    onClick={() => moveToEnd(i, true)}
-                    disabled={i === 0 || reordering}
-                    aria-label="Move to top of ranking"
-                    title="Move to top"
-                    className="flex h-6 w-6 items-center justify-center rounded-full bg-offwhite/90 text-brown disabled:opacity-30"
-                  >
-                    <ChevronsUp size={12} />
-                  </button>
-                  <button
-                    onClick={() => move(i, -1)}
-                    disabled={i === 0 || reordering}
-                    aria-label="Move up in ranking"
-                    title="Move up"
-                    className="flex h-6 w-6 items-center justify-center rounded-full bg-offwhite/90 text-brown disabled:opacity-30"
-                  >
-                    <ArrowUp size={12} />
-                  </button>
-                  <button
-                    onClick={() => move(i, 1)}
-                    disabled={i === visibleProducts.length - 1 || reordering}
-                    aria-label="Move down in ranking"
-                    title="Move down"
-                    className="flex h-6 w-6 items-center justify-center rounded-full bg-offwhite/90 text-brown disabled:opacity-30"
-                  >
-                    <ArrowDown size={12} />
-                  </button>
-                  <button
-                    onClick={() => moveToEnd(i, false)}
-                    disabled={i === visibleProducts.length - 1 || reordering}
-                    aria-label="Move to bottom of ranking"
-                    title="Move to bottom"
-                    className="flex h-6 w-6 items-center justify-center rounded-full bg-offwhite/90 text-brown disabled:opacity-30"
-                  >
-                    <ChevronsDown size={12} />
-                  </button>
                 </div>
               </div>
 
