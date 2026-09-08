@@ -62,8 +62,8 @@ const About = () => {
         <Reveal delay={0.1} className="mt-16 rounded-xl2 bg-beige p-10 text-center">
           <h2 className="font-heading text-3xl text-brown">Handmade Is More Than a Bag — It's a Story</h2>
           <p className="mx-auto mt-3 max-w-2xl text-brown/85">
-            Every FilatoCo piece is created with care, intention and belief — designed for the women who carry it, not
-            the crowd that follows trends.
+            Every FilatoCo piece is created with care, intention and belief — designed for the women who carry it,
+            expressing their uniqueness.
           </p>
           <p className="mt-6 font-hand text-3xl text-terracotta">Mirella, Founder</p>
         </Reveal>

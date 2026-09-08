@@ -117,9 +117,9 @@ const Shop = () => {
               <div className="grid grid-cols-2 gap-3 border-t border-beige p-3 sm:grid-cols-4">
                 {[
                   { src: '/material-leather-scraps.jpg', label: 'Leather Trim Accents' },
-                  { src: '/material-fabric-2.jpg', label: 'Rolled Fabric Bolts' },
+                  { src: '/material-fabric-2.jpg', label: 'Quality Fabrics' },
                   { src: '/material-brocade.jpg', label: 'Brocade Pattern Detail' },
-                  { src: '/material-spools-1.jpg', label: 'Ribbon & Twine' },
+                  { src: '/material-spools-1.jpg', label: 'Ribbons' },
                 ].map((item) => (
                   <div key={item.src}>
                     <img src={item.src} alt={item.label} className="aspect-square w-full rounded-lg object-cover" />
