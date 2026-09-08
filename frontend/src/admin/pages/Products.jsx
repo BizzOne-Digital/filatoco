@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Plus, Edit2, Trash2, Copy, Star, Sparkles, ArrowUp, ArrowDown } from 'lucide-react';
+import { Plus, Edit2, Trash2, Copy, Star, Sparkles, ArrowUp, ArrowDown, ChevronsUp, ChevronsDown } from 'lucide-react';
 import api from '../../services/api';
 import ProductForm from '../components/ProductForm';
 
@@ -27,27 +27,37 @@ const Products = () => {
     load();
   };
 
-  const move = async (index, direction) => {
-    const targetIndex = index + direction;
-    if (targetIndex < 0 || targetIndex >= products.length) return;
-
-    const reordered = [...products];
-    [reordered[index], reordered[targetIndex]] = [reordered[targetIndex], reordered[index]];
+  const saveOrder = async (reordered) => {
     setProducts(reordered);
     setReordering(true);
     try {
-      // Renumber everyone so ranking stays consistent even if sortOrder was never set before.
-      await Promise.all(reordered.map((p, i) => api.put(`/products/${p._id}`, (() => {
-        const fd = new FormData();
-        fd.append('sortOrder', i);
-        return fd;
-      })(), { headers: { 'Content-Type': 'multipart/form-data' } })));
-    } catch {
-      toast.error('Could not save new order');
+      // One atomic request instead of one-per-product — a transient hiccup on
+      // any single request used to fail the whole reorder with no clear reason.
+      await api.put('/products/reorder', {
+        order: reordered.map((p, i) => ({ id: p._id, sortOrder: i })),
+      });
+    } catch (err) {
+      toast.error(err.response?.status === 401 ? 'Your session expired — please log in again.' : 'Could not save new order');
       load();
     } finally {
       setReordering(false);
     }
+  };
+
+  const move = (index, direction) => {
+    const targetIndex = index + direction;
+    if (targetIndex < 0 || targetIndex >= products.length) return;
+    const reordered = [...products];
+    [reordered[index], reordered[targetIndex]] = [reordered[targetIndex], reordered[index]];
+    saveOrder(reordered);
+  };
+
+  const moveToEnd = (index, toStart) => {
+    const reordered = [...products];
+    const [item] = reordered.splice(index, 1);
+    if (toStart) reordered.unshift(item);
+    else reordered.push(item);
+    saveOrder(reordered);
   };
 
   return (
@@ -56,7 +66,10 @@ const Products = () => {
         <h1 className="font-serif text-2xl text-brown">Products</h1>
         <button onClick={() => { setEditing(null); setShowForm(true); }} className="btn-primary"><Plus size={16} /> Add Product</button>
       </div>
-      <p className="mt-2 text-xs text-brown/70">Use the arrows on each card to rank products — this order controls Featured Order on the Shop page and the homepage.</p>
+      <p className="mt-2 text-xs text-brown/70">
+        Rank products with the arrows — this order controls Featured Order on the Shop page and the homepage.
+        Use the double-arrows to jump straight to the top or bottom.
+      </p>
 
       {showForm && (
         <ProductForm
@@ -95,9 +108,19 @@ const Products = () => {
                 </div>
                 <div className="absolute bottom-2 left-2 flex gap-1">
                   <button
+                    onClick={() => moveToEnd(i, true)}
+                    disabled={i === 0 || reordering}
+                    aria-label="Move to top of ranking"
+                    title="Move to top"
+                    className="flex h-6 w-6 items-center justify-center rounded-full bg-offwhite/90 text-brown disabled:opacity-30"
+                  >
+                    <ChevronsUp size={12} />
+                  </button>
+                  <button
                     onClick={() => move(i, -1)}
                     disabled={i === 0 || reordering}
                     aria-label="Move up in ranking"
+                    title="Move up"
                     className="flex h-6 w-6 items-center justify-center rounded-full bg-offwhite/90 text-brown disabled:opacity-30"
                   >
                     <ArrowUp size={12} />
@@ -106,9 +129,19 @@ const Products = () => {
                     onClick={() => move(i, 1)}
                     disabled={i === products.length - 1 || reordering}
                     aria-label="Move down in ranking"
+                    title="Move down"
                     className="flex h-6 w-6 items-center justify-center rounded-full bg-offwhite/90 text-brown disabled:opacity-30"
                   >
                     <ArrowDown size={12} />
+                  </button>
+                  <button
+                    onClick={() => moveToEnd(i, false)}
+                    disabled={i === products.length - 1 || reordering}
+                    aria-label="Move to bottom of ranking"
+                    title="Move to bottom"
+                    className="flex h-6 w-6 items-center justify-center rounded-full bg-offwhite/90 text-brown disabled:opacity-30"
+                  >
+                    <ChevronsDown size={12} />
                   </button>
                 </div>
               </div>

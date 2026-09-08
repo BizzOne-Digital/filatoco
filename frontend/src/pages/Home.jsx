@@ -173,10 +173,10 @@ const Home = () => {
       <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
         <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
           {[
-            { icon: Heart, title: 'Handmade', text: 'Each piece is personally crafted.', bg: 'bg-blush/50' },
-            { icon: Sparkles, title: 'Unique Designs', text: 'No mass-produced fashion.', bg: 'bg-sage/35' },
-            { icon: Gem, title: 'Thoughtful Materials', text: 'Carefully selected yarns, fabrics and accessories.', bg: 'bg-taupe/40' },
-            { icon: PenTool, title: 'Personal Expression', text: 'Designed for women who want something different.', bg: 'bg-terracotta/20' },
+            { icon: Heart, title: 'Handmade', text: 'Each piece is personally crafted.', bg: 'bg-blush' },
+            { icon: Sparkles, title: 'Unique Designs', text: 'No mass-produced fashion.', bg: 'bg-sage/70' },
+            { icon: Gem, title: 'Thoughtful Materials', text: 'Carefully selected yarns, fabrics and accessories.', bg: 'bg-taupe/80' },
+            { icon: PenTool, title: 'Personal Expression', text: 'Designed for women who want something different.', bg: 'bg-terracotta/45' },
           ].map((f, i) => (
             <Reveal key={f.title} delay={i * 0.08} className={`rounded-xl2 ${f.bg} p-6 text-center shadow-soft`}>
               <f.icon className="mx-auto mb-3 text-terracotta" size={26} />
@@ -227,7 +227,7 @@ const Home = () => {
           </Reveal>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {testimonials.slice(0, 3).map((t, i) => (
-              <Reveal key={t._id} className={`rounded-xl2 p-6 shadow-soft ${['bg-blush/40', 'bg-taupe/35', 'bg-sage/30'][i % 3]}`}>
+              <Reveal key={t._id} className={`rounded-xl2 p-6 shadow-soft ${['bg-blush', 'bg-taupe/80', 'bg-sage/70'][i % 3]}`}>
                 <div className="mb-2 text-terracotta">{'★'.repeat(t.rating)}</div>
                 <p className="text-sm text-brown/85">"{t.review}"</p>
                 <p className="mt-4 text-sm font-medium text-brown">— {t.customerName}</p>
@@ -271,7 +271,7 @@ const Home = () => {
 
       {/* NEWSLETTER */}
       <section className="mx-auto max-w-7xl px-5 pb-20 md:px-8">
-        <div className="mx-auto max-w-3xl rounded-xl2 bg-gradient-to-br from-blush/60 via-taupe/30 to-sage/25 px-6 py-12 text-center shadow-soft">
+        <div className="mx-auto max-w-3xl rounded-xl2 bg-gradient-to-br from-blush via-taupe/85 to-sage/75 px-6 py-12 text-center shadow-soft">
           <h2 className="section-heading">A Little Handmade Inspiration</h2>
           <p className="mt-2 text-brown/85">Join the FilatoCo community for new designs, collections and stories from the studio.</p>
           <form onSubmit={handleSubscribe} className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">

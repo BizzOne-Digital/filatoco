@@ -180,3 +180,27 @@ export const deleteProduct = async (req, res, next) => {
     next(err);
   }
 };
+
+// Renumbers many products' sortOrder in a single atomic request, instead of
+// firing one HTTP request per product — avoids the whole ranking failing if
+// just one of many individual update requests has a transient hiccup.
+export const reorderProducts = async (req, res, next) => {
+  try {
+    const { order } = req.body;
+    if (!Array.isArray(order) || order.length === 0) {
+      return res.status(400).json({ message: 'order must be a non-empty array of { id, sortOrder }' });
+    }
+
+    const ops = order
+      .filter((item) => item?.id && Number.isInteger(item.sortOrder))
+      .map((item) => ({
+        updateOne: { filter: { _id: item.id }, update: { $set: { sortOrder: item.sortOrder } } },
+      }));
+    if (ops.length === 0) return res.status(400).json({ message: 'No valid { id, sortOrder } entries provided' });
+
+    await Product.bulkWrite(ops, { ordered: false });
+    res.json({ message: 'Order saved', updated: ops.length });
+  } catch (err) {
+    next(err);
+  }
+};
