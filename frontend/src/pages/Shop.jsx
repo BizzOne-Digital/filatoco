@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, useParams } from 'react-router-dom';
 import api from '../services/api';
 import ProductCard from '../components/ProductCard';
+import CardSkeleton from '../components/CardSkeleton';
 import Seo from '../components/Seo';
 import { breadcrumbSchema } from '../utils/structuredData';
 
@@ -128,7 +129,9 @@ const Shop = () => {
         )}
 
         {loading ? (
-          <p className="mt-16 text-center text-brown/70">Loading products...</p>
+          <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-4">
+            <CardSkeleton count={12} />
+          </div>
         ) : products.length === 0 ? (
           <p className="mt-16 text-center text-brown/70">No products found. Try adjusting your filters.</p>
         ) : (

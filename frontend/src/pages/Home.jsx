@@ -6,6 +6,7 @@ import { Heart, Sparkles, Gem, PenTool, Phone, Mail } from 'lucide-react';
 import api from '../services/api';
 import Reveal from '../components/Reveal';
 import ProductCard from '../components/ProductCard';
+import CardSkeleton from '../components/CardSkeleton';
 import Seo from '../components/Seo';
 
 // Retries once after a short delay before giving up — the live backend is a
@@ -25,9 +26,11 @@ const Home = () => {
   const [featured, setFeatured] = useState([]);
   const [featuredLoaded, setFeaturedLoaded] = useState(false);
   const [newArrivals, setNewArrivals] = useState([]);
+  const [newArrivalsLoaded, setNewArrivalsLoaded] = useState(false);
   const [testimonials, setTestimonials] = useState([]);
   const [gallery, setGallery] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [categoriesLoaded, setCategoriesLoaded] = useState(false);
   const [content, setContent] = useState(null);
   const [email, setEmail] = useState('');
   const [subscribing, setSubscribing] = useState(false);
@@ -39,10 +42,14 @@ const Home = () => {
       .finally(() => setFeaturedLoaded(true));
     fetchWithRetry(() => api.get('/products', { params: { newArrival: true, limit: 8, sort: 'manual' } }))
       .then(({ data }) => setNewArrivals(data.products))
-      .catch((err) => console.error('Failed to load new arrivals:', err));
+      .catch((err) => console.error('Failed to load new arrivals:', err))
+      .finally(() => setNewArrivalsLoaded(true));
     api.get('/testimonials').then(({ data }) => setTestimonials(data.testimonials)).catch(() => {});
     api.get('/gallery').then(({ data }) => setGallery(data.items)).catch(() => {});
-    api.get('/categories').then(({ data }) => setCategories(data.categories)).catch(() => {});
+    fetchWithRetry(() => api.get('/categories'))
+      .then(({ data }) => setCategories(data.categories))
+      .catch((err) => console.error('Failed to load categories:', err))
+      .finally(() => setCategoriesLoaded(true));
     api.get('/settings/homepage').then(({ data }) => setContent(data.content)).catch(() => {});
   }, []);
 
@@ -105,12 +112,18 @@ const Home = () => {
           <h2 className="section-heading mt-2">Handmade with Heart</h2>
         </Reveal>
         <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-4">
-          {featured.map((p, i) => (
-            <Reveal key={p._id} delay={i * 0.08}>
-              <ProductCard product={p} />
-            </Reveal>
-          ))}
-          {featuredLoaded && featured.length === 0 && <p className="col-span-full text-center text-brown/70">Featured products will appear here once added in Admin.</p>}
+          {!featuredLoaded ? (
+            <CardSkeleton count={4} />
+          ) : (
+            <>
+              {featured.map((p, i) => (
+                <Reveal key={p._id} delay={i * 0.08}>
+                  <ProductCard product={p} />
+                </Reveal>
+              ))}
+              {featured.length === 0 && <p className="col-span-full text-center text-brown/70">Featured products will appear here once added in Admin.</p>}
+            </>
+          )}
         </div>
       </section>
 
@@ -146,24 +159,31 @@ const Home = () => {
           <h2 className="section-heading mt-2">Shop by Category</h2>
         </Reveal>
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
-          {categories.map((c, i) => (
-            <Reveal key={c._id} delay={i * 0.06}>
-              <Link to={`/shop?category=${c._id}`} className="group relative block overflow-hidden rounded-xl2 bg-beige">
-                <div className="aspect-[4/3] overflow-hidden">
-                  {c.image?.url ? (
-                    <img src={c.image.url} alt={c.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                  ) : (
-                    <div className="flex h-full items-center justify-center bg-taupe/30 text-brown/70">{c.name}</div>
-                  )}
-                </div>
-                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-4">
-                  <p className="font-serif text-lg text-white [text-shadow:0_1px_4px_rgba(0,0,0,0.7)]">{c.name}</p>
-                  <span className="text-xs text-white/90 opacity-0 transition-opacity [text-shadow:0_1px_4px_rgba(0,0,0,0.7)] group-hover:opacity-100">Explore Collection →</span>
-                </div>
-              </Link>
-            </Reveal>
-          ))}
+          {!categoriesLoaded ? (
+            <>
+              <div className="aspect-[4/3] animate-pulse rounded-xl2 bg-beige" />
+              <div className="aspect-[4/3] animate-pulse rounded-xl2 bg-beige" />
+            </>
+          ) : (
+            categories.map((c, i) => (
+              <Reveal key={c._id} delay={i * 0.06}>
+                <Link to={`/shop?category=${c._id}`} className="group relative block overflow-hidden rounded-xl2 bg-beige">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    {c.image?.url ? (
+                      <img src={c.image.url} alt={c.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    ) : (
+                      <div className="flex h-full items-center justify-center bg-taupe/30 text-brown/70">{c.name}</div>
+                    )}
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-4">
+                    <p className="font-serif text-lg text-white [text-shadow:0_1px_4px_rgba(0,0,0,0.7)]">{c.name}</p>
+                    <span className="text-xs text-white/90 opacity-0 transition-opacity [text-shadow:0_1px_4px_rgba(0,0,0,0.7)] group-hover:opacity-100">Explore Collection →</span>
+                  </div>
+                </Link>
+              </Reveal>
+            ))
+          )}
         </div>
       </section>
 
@@ -207,18 +227,32 @@ const Home = () => {
       </section>
 
       {/* NEW ARRIVALS */}
-      {newArrivals.length > 0 && (
+      {(!newArrivalsLoaded || newArrivals.length > 0) && (
         <section className="mx-auto max-w-7xl px-5 py-16 md:px-8">
           <Reveal className="text-center">
             <span className="label-eyebrow">Just In</span>
             <h2 className="section-heading mt-2">New Arrivals</h2>
           </Reveal>
           <div className="mt-10 flex gap-5 overflow-x-auto pb-4">
-            {newArrivals.map((p) => (
-              <div key={p._id} className="w-56 flex-shrink-0">
-                <ProductCard product={p} />
+            {!newArrivalsLoaded ? (
+              <div className="flex gap-5">
+                {Array.from({ length: 4 }, (_, i) => (
+                  <div key={i} className="w-56 flex-shrink-0 overflow-hidden rounded-xl2 bg-offwhite shadow-soft">
+                    <div className="aspect-[4/5] animate-pulse bg-beige" />
+                    <div className="space-y-2 p-4">
+                      <div className="mx-auto h-3 w-3/4 animate-pulse rounded bg-beige" />
+                      <div className="mx-auto h-3 w-1/3 animate-pulse rounded bg-beige" />
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            ) : (
+              newArrivals.map((p) => (
+                <div key={p._id} className="w-56 flex-shrink-0">
+                  <ProductCard product={p} />
+                </div>
+              ))
+            )}
           </div>
         </section>
       )}
