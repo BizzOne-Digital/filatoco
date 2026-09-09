@@ -8,8 +8,22 @@ import Reveal from '../components/Reveal';
 import ProductCard from '../components/ProductCard';
 import Seo from '../components/Seo';
 
+// Retries once after a short delay before giving up — the live backend is a
+// serverless function that occasionally cold-starts slowly, which was
+// causing homepage sections to silently render empty on a transient failure.
+const fetchWithRetry = async (fn, retries = 1, delayMs = 800) => {
+  try {
+    return await fn();
+  } catch (err) {
+    if (retries <= 0) throw err;
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+    return fetchWithRetry(fn, retries - 1, delayMs);
+  }
+};
+
 const Home = () => {
   const [featured, setFeatured] = useState([]);
+  const [featuredLoaded, setFeaturedLoaded] = useState(false);
   const [newArrivals, setNewArrivals] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [gallery, setGallery] = useState([]);
@@ -19,12 +33,17 @@ const Home = () => {
   const [subscribing, setSubscribing] = useState(false);
 
   useEffect(() => {
-    api.get('/products', { params: { featured: true, limit: 4, sort: 'manual' } }).then(({ data }) => setFeatured(data.products));
-    api.get('/products', { params: { newArrival: true, limit: 8, sort: 'manual' } }).then(({ data }) => setNewArrivals(data.products));
-    api.get('/testimonials').then(({ data }) => setTestimonials(data.testimonials));
-    api.get('/gallery').then(({ data }) => setGallery(data.items));
-    api.get('/categories').then(({ data }) => setCategories(data.categories));
-    api.get('/settings/homepage').then(({ data }) => setContent(data.content));
+    fetchWithRetry(() => api.get('/products', { params: { featured: true, limit: 4, sort: 'manual' } }))
+      .then(({ data }) => setFeatured(data.products))
+      .catch((err) => console.error('Failed to load featured products:', err))
+      .finally(() => setFeaturedLoaded(true));
+    fetchWithRetry(() => api.get('/products', { params: { newArrival: true, limit: 8, sort: 'manual' } }))
+      .then(({ data }) => setNewArrivals(data.products))
+      .catch((err) => console.error('Failed to load new arrivals:', err));
+    api.get('/testimonials').then(({ data }) => setTestimonials(data.testimonials)).catch(() => {});
+    api.get('/gallery').then(({ data }) => setGallery(data.items)).catch(() => {});
+    api.get('/categories').then(({ data }) => setCategories(data.categories)).catch(() => {});
+    api.get('/settings/homepage').then(({ data }) => setContent(data.content)).catch(() => {});
   }, []);
 
   const handleSubscribe = async (e) => {
@@ -91,7 +110,7 @@ const Home = () => {
               <ProductCard product={p} />
             </Reveal>
           ))}
-          {featured.length === 0 && <p className="col-span-full text-center text-brown/70">Featured products will appear here once added in Admin.</p>}
+          {featuredLoaded && featured.length === 0 && <p className="col-span-full text-center text-brown/70">Featured products will appear here once added in Admin.</p>}
         </div>
       </section>
 

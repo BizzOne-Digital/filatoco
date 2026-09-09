@@ -53,7 +53,9 @@ const Shop = () => {
     const next = new URLSearchParams(searchParams);
     if (value) next.set(key, value);
     else next.delete(key);
-    next.delete('page');
+    // Changing a filter should reset back to page 1 — but not when the change
+    // IS the page number itself, or pagination could never move past page 1.
+    if (key !== 'page') next.delete('page');
     setSearchParams(next);
   };
 
@@ -80,16 +82,12 @@ const Shop = () => {
             className="rounded-full border border-beige bg-offwhite px-4 py-2 text-sm"
           />
           <select value={category} onChange={(e) => updateParam('category', e.target.value)} className="rounded-full border border-beige bg-offwhite px-4 py-2 text-sm">
-            <option value="">All Categories</option>
+            <option value="">Categories</option>
             {categories.map((c) => <option key={c._id} value={c._id}>{c.name}</option>)}
           </select>
           <select value={productType} onChange={(e) => updateParam('productType', e.target.value)} className="rounded-full border border-beige bg-offwhite px-4 py-2 text-sm">
-            {productTypes.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
-          </select>
-          <select value={madeType} onChange={(e) => updateParam('madeType', e.target.value)} className="rounded-full border border-beige bg-offwhite px-4 py-2 text-sm">
-            <option value="">Ready & Custom</option>
-            <option value="ready-made">Ready Made</option>
-            <option value="custom-made">Custom Made</option>
+            <option value="">Styles</option>
+            {productTypes.slice(1).map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
           </select>
           <select value={sort} onChange={(e) => updateParam('sort', e.target.value)} className="rounded-full border border-beige bg-offwhite px-4 py-2 text-sm">
             <option value="manual">Featured Order</option>
@@ -98,8 +96,6 @@ const Shop = () => {
             <option value="price-desc">Price: High to Low</option>
             <option value="featured">Featured</option>
           </select>
-          <input type="number" placeholder="Min $" defaultValue={minPrice} onBlur={(e) => updateParam('minPrice', e.target.value)} className="w-20 rounded-full border border-beige bg-offwhite px-3 py-2 text-sm" />
-          <input type="number" placeholder="Max $" defaultValue={maxPrice} onBlur={(e) => updateParam('maxPrice', e.target.value)} className="w-20 rounded-full border border-beige bg-offwhite px-3 py-2 text-sm" />
         </div>
 
         {activeCategory && (

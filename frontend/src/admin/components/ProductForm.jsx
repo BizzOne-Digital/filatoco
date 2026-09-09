@@ -140,7 +140,31 @@ const ProductForm = ({ product, onClose, onSaved }) => {
           <input placeholder="SEO Description" value={form.seoDescription} onChange={set('seoDescription')} className="w-full rounded-lg border border-beige px-4 py-2 text-sm" />
 
           <div>
-            <label className="mb-1 block text-sm text-brown/85">Product Images — max {MAX_IMAGE_MB}MB each</label>
+            {existingImages.length > 0 && (
+              <>
+                <label className="mb-1 block text-sm text-brown/85">Current Photos — hover and click the X to remove one</label>
+                <div className="mb-3 flex flex-wrap gap-2">
+                  {existingImages.map((img) => (
+                    <div key={img.publicId} className="group relative">
+                      <img src={img.url} alt="" className="h-16 w-16 rounded object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteImage(img.publicId)}
+                        disabled={deletingImage === img.publicId}
+                        aria-label="Delete image"
+                        className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-terracotta text-white opacity-0 shadow-sm transition-opacity group-hover:opacity-100 disabled:opacity-100"
+                      >
+                        {deletingImage === img.publicId ? '…' : <Trash2 size={11} />}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+            <label className="mb-1 block text-sm text-brown/85">
+              Add More Photos — max {MAX_IMAGE_MB}MB each. These are kept alongside the current photos above, not a
+              replacement — to swap one out, remove it above and add a new one here.
+            </label>
             <input
               type="file"
               multiple
@@ -148,23 +172,10 @@ const ProductForm = ({ product, onClose, onSaved }) => {
               onChange={(e) => setFiles(filterOversizedFiles(Array.from(e.target.files), toast))}
               className="w-full text-sm"
             />
-            {existingImages.length > 0 && (
-              <div className="mt-2 flex flex-wrap gap-2">
-                {existingImages.map((img) => (
-                  <div key={img.publicId} className="group relative">
-                    <img src={img.url} alt="" className="h-16 w-16 rounded object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteImage(img.publicId)}
-                      disabled={deletingImage === img.publicId}
-                      aria-label="Delete image"
-                      className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-terracotta text-white opacity-0 shadow-sm transition-opacity group-hover:opacity-100 disabled:opacity-100"
-                    >
-                      {deletingImage === img.publicId ? '…' : <Trash2 size={11} />}
-                    </button>
-                  </div>
-                ))}
-              </div>
+            {files.length > 0 && (
+              <p className="mt-1 text-xs text-terracotta">
+                {files.length} new photo{files.length > 1 ? 's' : ''} ready — click "Save Product" below to add {files.length > 1 ? 'them' : 'it'}.
+              </p>
             )}
           </div>
 
