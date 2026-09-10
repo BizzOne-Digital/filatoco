@@ -25,6 +25,9 @@ const productSchema = new mongoose.Schema(
     productType: { type: String, enum: ['shoulder-bag', 'handbag', 'crossbody', 'tote', 'clutch'], required: true },
     madeType: { type: String, enum: ['ready-made', 'custom-made'], default: 'ready-made' },
     images: [imageSchema],
+    // Uploaded directly from the browser to Cloudinary (see /api/uploads/video-signature) —
+    // routing video through our serverless function would hit Vercel's ~4.5MB body limit.
+    video: { type: imageSchema, default: undefined },
     isFeatured: { type: Boolean, default: false },
     isNewArrival: { type: Boolean, default: false },
     status: { type: String, enum: ['draft', 'published'], default: 'draft' },

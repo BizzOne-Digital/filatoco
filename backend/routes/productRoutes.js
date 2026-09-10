@@ -8,6 +8,7 @@ import {
   updateProduct,
   deleteProduct,
   deleteProductImage,
+  deleteProductVideo,
   duplicateProduct,
   reorderProducts,
 } from '../controllers/productController.js';
@@ -24,6 +25,7 @@ router.put('/:id', protect, adminOnly, upload.array('images', 8), updateProduct)
 router.get('/:slug', optionalAuth, getProductBySlug);
 router.delete('/:id', protect, adminOnly, deleteProduct);
 router.delete('/:id/images/:publicId', protect, adminOnly, deleteProductImage);
+router.delete('/:id/video', protect, adminOnly, deleteProductVideo);
 router.post('/:id/duplicate', protect, adminOnly, duplicateProduct);
 
 export default router;

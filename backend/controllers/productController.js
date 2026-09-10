@@ -1,4 +1,5 @@
 import Product from '../models/Product.js';
+import cloudinary from '../config/cloudinary.js';
 import { uploadBufferToCloudinary, deleteFromCloudinary } from '../utils/cloudinaryUpload.js';
 
 export const getProducts = async (req, res, next) => {
@@ -103,6 +104,16 @@ const pickAllowedFields = (body) => {
   return picked;
 };
 
+// Video is uploaded directly from the browser to Cloudinary (see
+// uploadController.getVideoUploadSignature), so the request only carries
+// the resulting URL/publicId as two plain fields, not a file.
+const pickVideoField = (body) => {
+  if (body.videoUrl && body.videoPublicId) {
+    return { video: { url: body.videoUrl, publicId: body.videoPublicId } };
+  }
+  return {};
+};
+
 export const createProduct = async (req, res, next) => {
   try {
     const images = [];
@@ -111,7 +122,7 @@ export const createProduct = async (req, res, next) => {
         images.push(await uploadBufferToCloudinary(file.buffer, 'filatoco/products'));
       }
     }
-    const product = await Product.create({ ...pickAllowedFields(req.body), images });
+    const product = await Product.create({ ...pickAllowedFields(req.body), ...pickVideoField(req.body), images });
     res.status(201).json({ product });
   } catch (err) {
     next(err);
@@ -131,7 +142,22 @@ export const updateProduct = async (req, res, next) => {
       product.images.push(...newImages);
     }
 
-    Object.assign(product, pickAllowedFields(req.body));
+    Object.assign(product, pickAllowedFields(req.body), pickVideoField(req.body));
+    await product.save();
+    res.json({ product });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deleteProductVideo = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+    if (product.video?.publicId) {
+      await cloudinary.uploader.destroy(product.video.publicId, { resource_type: 'video' });
+    }
+    product.video = undefined;
     await product.save();
     res.json({ product });
   } catch (err) {

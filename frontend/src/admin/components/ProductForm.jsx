@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { X, Trash2 } from 'lucide-react';
+import { X, Trash2, Video } from 'lucide-react';
 import api from '../../services/api';
 import { filterOversizedFiles, MAX_IMAGE_MB } from '../../utils/validateImage';
 
 // Style options within a category (category itself = Crocheted or Tapestry, managed separately).
 const productTypes = ['shoulder-bag', 'handbag', 'crossbody', 'tote', 'clutch'];
+
+const MAX_VIDEO_MB = 100;
 
 const emptyForm = {
   name: '', sku: '', description: '', shortDescription: '', price: '', comparePrice: '',
@@ -14,6 +16,35 @@ const emptyForm = {
   status: 'published', seoTitle: '', seoDescription: '',
 };
 
+// Uploads straight from the browser to Cloudinary using a short-lived signed
+// request — video never passes through our own server, so it isn't capped by
+// Vercel's ~4.5MB serverless body limit the way image uploads are.
+const uploadVideoDirectToCloudinary = (file, { signature, timestamp, folder, apiKey, cloudName }, onProgress) =>
+  new Promise((resolve, reject) => {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('api_key', apiKey);
+    fd.append('timestamp', timestamp);
+    fd.append('signature', signature);
+    fd.append('folder', folder);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`);
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable) onProgress(Math.round((e.loaded / e.total) * 100));
+    };
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        const data = JSON.parse(xhr.responseText);
+        resolve({ url: data.secure_url, publicId: data.public_id });
+      } else {
+        reject(new Error('Cloudinary upload failed'));
+      }
+    };
+    xhr.onerror = () => reject(new Error('Network error during upload'));
+    xhr.send(fd);
+  });
+
 const ProductForm = ({ product, onClose, onSaved }) => {
   const [categories, setCategories] = useState([]);
   const [form, setForm] = useState(emptyForm);
@@ -21,6 +52,11 @@ const ProductForm = ({ product, onClose, onSaved }) => {
   const [saving, setSaving] = useState(false);
   const [existingImages, setExistingImages] = useState(product?.images || []);
   const [deletingImage, setDeletingImage] = useState(null);
+  const [existingVideo, setExistingVideo] = useState(product?.video || null);
+  const [pendingVideo, setPendingVideo] = useState(null);
+  const [videoUploading, setVideoUploading] = useState(false);
+  const [videoProgress, setVideoProgress] = useState(0);
+  const [deletingVideo, setDeletingVideo] = useState(false);
 
   useEffect(() => {
     api.get('/categories').then(({ data }) => setCategories(data.categories));
@@ -39,6 +75,8 @@ const ProductForm = ({ product, onClose, onSaved }) => {
       setForm(emptyForm);
     }
     setExistingImages(product?.images || []);
+    setExistingVideo(product?.video || null);
+    setPendingVideo(null);
   }, [product]);
 
   const handleDeleteImage = async (publicId) => {
@@ -53,6 +91,48 @@ const ProductForm = ({ product, onClose, onSaved }) => {
       toast.error(err.response?.data?.message || 'Could not delete image');
     } finally {
       setDeletingImage(null);
+    }
+  };
+
+  const handleDeleteVideo = async () => {
+    if (!product || !existingVideo) return;
+    if (!confirm('Remove this video?')) return;
+    setDeletingVideo(true);
+    try {
+      await api.delete(`/products/${product._id}/video`);
+      setExistingVideo(null);
+      toast.success('Video removed');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Could not remove video');
+    } finally {
+      setDeletingVideo(false);
+    }
+  };
+
+  const handleVideoSelect = async (e) => {
+    const file = e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    if (!file.type.startsWith('video/')) {
+      toast.error('Please choose a video file.');
+      return;
+    }
+    if (file.size > MAX_VIDEO_MB * 1024 * 1024) {
+      toast.error(`Video is over ${MAX_VIDEO_MB}MB — please use a shorter or more compressed clip.`);
+      return;
+    }
+
+    setVideoUploading(true);
+    setVideoProgress(0);
+    try {
+      const { data: sig } = await api.get('/uploads/video-signature');
+      const uploaded = await uploadVideoDirectToCloudinary(file, sig, setVideoProgress);
+      setPendingVideo(uploaded);
+      toast.success('Video uploaded — click "Save Product" to attach it.');
+    } catch (err) {
+      toast.error('Video upload failed. Please try again.');
+    } finally {
+      setVideoUploading(false);
     }
   };
 
@@ -72,6 +152,10 @@ const ProductForm = ({ product, onClose, onSaved }) => {
         }
       });
       files.forEach((f) => fd.append('images', f));
+      if (pendingVideo) {
+        fd.append('videoUrl', pendingVideo.url);
+        fd.append('videoPublicId', pendingVideo.publicId);
+      }
 
       if (product) {
         await api.put(`/products/${product._id}`, fd, { headers: { 'Content-Type': 'multipart/form-data' } });
@@ -179,7 +263,45 @@ const ProductForm = ({ product, onClose, onSaved }) => {
             )}
           </div>
 
-          <button type="submit" disabled={saving} className="btn-primary w-full">{saving ? 'Saving...' : 'Save Product'}</button>
+          <div className="rounded-lg border border-beige p-3">
+            <label className="mb-1 flex items-center gap-1.5 text-sm text-brown/85"><Video size={14} /> Product Video (optional) — one video, max {MAX_VIDEO_MB}MB</label>
+
+            {existingVideo && !pendingVideo && (
+              <div className="mb-2 flex items-center gap-3">
+                <video src={existingVideo.url} className="h-20 w-28 rounded bg-black object-cover" muted />
+                <button
+                  type="button"
+                  onClick={handleDeleteVideo}
+                  disabled={deletingVideo}
+                  className="flex items-center gap-1 text-xs text-terracotta hover:underline"
+                >
+                  <Trash2 size={12} /> {deletingVideo ? 'Removing...' : 'Remove video'}
+                </button>
+              </div>
+            )}
+
+            {pendingVideo && (
+              <div className="mb-2 flex items-center gap-3">
+                <video src={pendingVideo.url} className="h-20 w-28 rounded bg-black object-cover" muted />
+                <span className="text-xs text-terracotta">New video ready — click "Save Product" to attach it.</span>
+              </div>
+            )}
+
+            {!existingVideo && !pendingVideo && (
+              <input type="file" accept="video/*" onChange={handleVideoSelect} disabled={videoUploading} className="w-full text-sm" />
+            )}
+
+            {videoUploading && (
+              <div className="mt-2">
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-beige">
+                  <div className="h-full bg-terracotta transition-all" style={{ width: `${videoProgress}%` }} />
+                </div>
+                <p className="mt-1 text-xs text-brown/70">Uploading video... {videoProgress}%</p>
+              </div>
+            )}
+          </div>
+
+          <button type="submit" disabled={saving || videoUploading} className="btn-primary w-full">{saving ? 'Saving...' : 'Save Product'}</button>
         </form>
       </div>
     </div>

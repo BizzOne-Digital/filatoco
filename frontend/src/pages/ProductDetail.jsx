@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { Heart, Minus, Plus } from 'lucide-react';
+import { Heart, Minus, Plus, Play } from 'lucide-react';
 import api from '../services/api';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -17,6 +17,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
   const [activeImage, setActiveImage] = useState(0);
+  const [showVideo, setShowVideo] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [tab, setTab] = useState('details');
   const { addItem } = useCart();
@@ -24,6 +25,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     setActiveImage(0);
+    setShowVideo(false);
     api
       .get(`/products/${slug}`)
       .then(({ data }) => {
@@ -62,15 +64,33 @@ const ProductDetail = () => {
         <div className="grid gap-10 md:grid-cols-2">
           <div>
             <div className="aspect-square overflow-hidden rounded-xl2 bg-beige">
-              <img src={images[activeImage]?.url} alt={`${product.name} — handmade ${styleLabel.toLowerCase()} by FilatoCo`} className="h-full w-full object-cover" />
+              {showVideo && product.video ? (
+                <video src={product.video.url} controls autoPlay className="h-full w-full object-cover" />
+              ) : (
+                <img src={images[activeImage]?.url} alt={`${product.name} — handmade ${styleLabel.toLowerCase()} by FilatoCo`} className="h-full w-full object-cover" />
+              )}
             </div>
-            {images.length > 1 && (
+            {(images.length > 1 || product.video) && (
               <div className="mt-3 flex gap-3">
                 {images.map((img, i) => (
-                  <button key={i} onClick={() => setActiveImage(i)} className={`h-16 w-16 overflow-hidden rounded-lg border-2 ${activeImage === i ? 'border-terracotta' : 'border-transparent'}`}>
+                  <button
+                    key={i}
+                    onClick={() => { setActiveImage(i); setShowVideo(false); }}
+                    className={`h-16 w-16 overflow-hidden rounded-lg border-2 ${!showVideo && activeImage === i ? 'border-terracotta' : 'border-transparent'}`}
+                  >
                     <img src={img.url} alt={`${product.name} view ${i + 1}`} className="h-full w-full object-cover" />
                   </button>
                 ))}
+                {product.video && (
+                  <button
+                    onClick={() => setShowVideo(true)}
+                    aria-label="Watch product video"
+                    className={`relative h-16 w-16 overflow-hidden rounded-lg border-2 bg-black ${showVideo ? 'border-terracotta' : 'border-transparent'}`}
+                  >
+                    <video src={product.video.url} className="h-full w-full object-cover opacity-70" muted />
+                    <Play size={20} className="absolute inset-0 m-auto text-white" fill="white" />
+                  </button>
+                )}
               </div>
             )}
           </div>
