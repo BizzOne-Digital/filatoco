@@ -28,8 +28,9 @@ const Products = () => {
   };
 
   const handleDuplicate = async (id) => {
+    if (!confirm('Create a copy of this product? The copy will be saved as a Draft (hidden from the shop) until you edit and publish it.')) return;
     await api.post(`/products/${id}/duplicate`);
-    toast.success('Product duplicated');
+    toast.success('Copy created as a Draft — edit it and set status to Published to show it on the site.', { duration: 5000 });
     load();
   };
 
@@ -129,6 +130,7 @@ const Products = () => {
               <div className="relative aspect-[4/5] bg-beige">
                 <img src={p.images?.[0]?.url} alt={p.name} className="h-full w-full object-cover" />
                 <span
+                  title={p.status === 'published' ? 'Visible on the live shop' : 'Hidden from the shop — edit and set to Published to show it'}
                   className={`absolute left-2 top-2 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ${
                     p.status === 'published' ? 'bg-sage/80 text-brown' : 'bg-taupe/80 text-brown'
                   }`}
