@@ -47,12 +47,19 @@ export const sendMail = async ({ to, subject, html }) => {
     console.warn(`[emailService] SMTP not configured — skipped email "${subject}" to ${to}`);
     return { skipped: true };
   }
-  return t.sendMail({
-    from: `"FilatoCo" <${process.env.SMTP_USER}>`,
-    to,
-    subject,
-    html,
-  });
+  try {
+    const result = await t.sendMail({
+      from: `"FilatoCo" <${process.env.SMTP_USER}>`,
+      to,
+      subject,
+      html,
+    });
+    console.log(`[emailService] SENT "${subject}" to ${to} — messageId: ${result.messageId}`);
+    return result;
+  } catch (err) {
+    console.error(`[emailService] FAILED to send "${subject}" to ${to} — ${err.message}`);
+    throw err;
+  }
 };
 
 export const templates = {
