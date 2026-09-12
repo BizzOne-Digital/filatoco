@@ -45,8 +45,10 @@ export const createOrder = async (req, res, next) => {
       status: 'pending',
     });
 
-    sendMail({ to: customer.email, subject: `Order Confirmation #${order.orderNumber}`, html: templates.orderConfirmation(order) }).catch(() => {});
-    sendMail({ to: process.env.ADMIN_EMAIL, subject: `New Order #${order.orderNumber}`, html: templates.orderConfirmation(order) }).catch(() => {});
+    await Promise.allSettled([
+      sendMail({ to: customer.email, subject: `Order Confirmation #${order.orderNumber}`, html: templates.orderConfirmation(order) }),
+      sendMail({ to: process.env.ADMIN_EMAIL, subject: `New Order #${order.orderNumber}`, html: templates.orderConfirmation(order) }),
+    ]);
 
     res.status(201).json({ order });
   } catch (err) {
@@ -104,7 +106,7 @@ export const updateOrderStatus = async (req, res, next) => {
     await order.save();
 
     if (status) {
-      sendMail({ to: order.customer.email, subject: `Order #${order.orderNumber} Update`, html: templates.orderStatusUpdate(order) }).catch(() => {});
+      await sendMail({ to: order.customer.email, subject: `Order #${order.orderNumber} Update`, html: templates.orderStatusUpdate(order) }).catch(() => {});
     }
 
     res.json({ order });

@@ -16,7 +16,7 @@ export const subscribe = async (req, res, next) => {
     }
 
     await NewsletterSubscriber.create({ email });
-    sendMail({ to: email, subject: 'Welcome to FilatoCo', html: templates.newsletterConfirmation() }).catch(() => {});
+    await sendMail({ to: email, subject: 'Welcome to FilatoCo', html: templates.newsletterConfirmation() }).catch(() => {});
 
     res.status(201).json({ message: 'Subscribed successfully' });
   } catch (err) {

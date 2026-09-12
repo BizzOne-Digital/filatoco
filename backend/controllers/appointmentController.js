@@ -7,7 +7,7 @@ export const submitAppointment = async (req, res, next) => {
     if (!name || !email) return res.status(400).json({ message: 'Name and email are required' });
 
     const appointment = await Appointment.create({ name, email, phone, preferredDate, message });
-    sendMail({ to: process.env.ADMIN_EMAIL, subject: `New Appointment Request from ${name}`, html: templates.appointmentNotification(appointment) }).catch(() => {});
+    await sendMail({ to: process.env.ADMIN_EMAIL, subject: `New Appointment Request from ${name}`, html: templates.appointmentNotification(appointment) }).catch(() => {});
 
     res.status(201).json({ message: 'Appointment request submitted' });
   } catch (err) {

@@ -14,7 +14,7 @@ export const submitCustomRequest = async (req, res, next) => {
       name, email, phone, bagType, size, colors, materials, budgetRange, description, referenceImage,
     });
 
-    sendMail({ to: process.env.ADMIN_EMAIL, subject: `New Custom Bag Request from ${name}`, html: templates.customRequestNotification(request) }).catch(() => {});
+    await sendMail({ to: process.env.ADMIN_EMAIL, subject: `New Custom Bag Request from ${name}`, html: templates.customRequestNotification(request) }).catch(() => {});
 
     res.status(201).json({ message: 'Custom request submitted successfully' });
   } catch (err) {

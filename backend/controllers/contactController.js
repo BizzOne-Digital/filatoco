@@ -8,8 +8,10 @@ export const submitContact = async (req, res, next) => {
 
     const contact = await Contact.create({ fullName, email, phone, subject, message });
 
-    sendMail({ to: process.env.ADMIN_EMAIL, subject: `New Contact: ${subject || fullName}`, html: templates.contactNotification(contact) }).catch(() => {});
-    sendMail({ to: email, subject: 'Thank You for Contacting FilatoCo', html: templates.contactConfirmation(contact) }).catch(() => {});
+    await Promise.allSettled([
+      sendMail({ to: process.env.ADMIN_EMAIL, subject: `New Contact: ${subject || fullName}`, html: templates.contactNotification(contact) }),
+      sendMail({ to: email, subject: 'Thank You for Contacting FilatoCo', html: templates.contactConfirmation(contact) }),
+    ]);
 
     res.status(201).json({ message: 'Message sent successfully' });
   } catch (err) {
